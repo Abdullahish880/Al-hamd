@@ -16,7 +16,7 @@
           "type": "text",
           "name": "t:names.heading",
           "settings": {
-            "text": "",
+            "text": "<p>heloo</p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
