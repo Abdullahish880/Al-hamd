@@ -39,7 +39,14 @@
     <div id="header-group">
       {% sections 'header-group' %}
     </div>
-
+<h5>helooooooooooooooo</h5>
+<pre>
+      {% if request.design_mode %}
+        this is design mode
+        {% else %}
+          this is not design mode
+        {% endif %}
+    </pre>
     
     <script
       src="{{ 'critical.js' | asset_url }}"
@@ -57,14 +64,7 @@
     >
       {{ content_for_layout }}
     </main>
-<h5>helooooooooooooooo</h5>
-<pre>
-      {% if request.design_mode %}
-        this is design mode
-        {% else %}
-          this is not design mode
-        {% endif %}
-    </pre>
+
     {% sections 'footer-group' %}
 
     {% render 'search-modal' %}
