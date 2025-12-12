@@ -9,70 +9,26 @@
  */
 {
   "sections": {
-    "hero_jVaWmY": {
-      "type": "hero",
-      "blocks": {
-        "text_YLPk4p": {
-          "type": "text",
-          "name": "t:names.heading",
-          "settings": {
-            "text": "",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground-heading)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "text_YLPk4p"
-      ],
-      "name": "t:names.hero",
+    "banner_creative_9JwiG6": {
+      "type": "banner-creative",
+      "name": "Creative Banner",
       "settings": {
-        "media_type_1": "image",
-        "image_1": "shopify://shop_images/Teal_Illustration_Digital_Business_Blog_Banner.png",
-        "media_type_2": "video",
-        "stack_media_on_mobile": false,
-        "custom_mobile_media": true,
-        "media_type_1_mobile": "image",
-        "media_type_2_mobile": "image",
-        "link": "",
-        "open_in_new_tab": false,
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "space-between",
-        "vertical_alignment": "flex-end",
-        "align_baseline": true,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "flex-end",
-        "gap": 96,
-        "section_width": "page-width",
-        "section_height": "full-screen",
-        "section_height_custom": 50,
-        "color_scheme": "scheme-58084d4c-a86e-4d0a-855e-a0966e5043f7",
-        "toggle_overlay": false,
-        "overlay_color": "#f9efef66",
-        "overlay_style": "gradient",
-        "gradient_direction": "to bottom",
-        "blurred_reflection": false,
-        "reflection_opacity": 75,
-        "padding-block-start": 100,
-        "padding-block-end": 72
+        "heading": "Let’s Work Together to Create Wonders with Us",
+        "subtext": "A visionary creative, crafting captivating wonders through art and design. Adept at turning imagination into extraordinary reality.",
+        "btn1_text": "Let's Talk",
+        "btn1_link": "",
+        "btn2_text": "Start Project",
+        "btn2_link": "",
+        "stat1_number": "15+",
+        "stat1_label": "years experience",
+        "stat2_number": "26K",
+        "stat2_label": "projects success",
+        "stat3_number": "98%",
+        "stat3_label": "satisfied rate",
+        "main_image": "shopify://shop_images/istockphoto-528582811-612x612.jpg",
+        "tag1": "Illustration",
+        "tag2": "Graphic Design",
+        "tag3": "Creative Branding"
       }
     },
     "collection_list_KdaVk7": {
@@ -434,6 +390,43 @@
     },
     "testimonial_3CFfk7": {
       "type": "testimonial",
+      "blocks": {
+        "testimonial_PmppAc": {
+          "type": "testimonial",
+          "settings": {
+            "name": "John Doe",
+            "role": "Verified Buyer",
+            "message": "This product is amazing! Highly recommended.",
+            "card_bg_color": "#ffffff",
+            "card_border_color": "#dddddd"
+          }
+        },
+        "testimonial_CHpEKk": {
+          "type": "testimonial",
+          "settings": {
+            "name": "John Doe",
+            "role": "Verified Buyer",
+            "message": "This product is amazing! Highly recommended.",
+            "card_bg_color": "#ffffff",
+            "card_border_color": "#dddddd"
+          }
+        },
+        "testimonial_wPx4H6": {
+          "type": "testimonial",
+          "settings": {
+            "name": "John Doe",
+            "role": "Verified Buyer",
+            "message": "This product is amazing! Highly recommended.",
+            "card_bg_color": "#ffffff",
+            "card_border_color": "#dddddd"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_PmppAc",
+        "testimonial_CHpEKk",
+        "testimonial_wPx4H6"
+      ],
       "name": "Testimonial Section",
       "settings": {
         "heading": "What Our Customers Say",
@@ -444,7 +437,7 @@
     }
   },
   "order": [
-    "hero_jVaWmY",
+    "banner_creative_9JwiG6",
     "collection_list_KdaVk7",
     "product_list_b6EDmp",
     "testimonial_3CFfk7"
