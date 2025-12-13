@@ -1,14 +1,23 @@
-<section class="testimonial-section">
+<section class="testimonial-section" style="background: {{ section.settings.bg_color }};">
   <div class="testimonial-container">
+
+    {% if section.settings.heading != blank %}
+      <h2 class="testimonial-heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    {% if section.settings.subtitle != blank %}
+      <p class="testimonial-subtitle">{{ section.settings.subtitle }}</p>
+    {% endif %}
 
     <div class="testimonial-slider" id="testimonialSlider">
 
       {% for block in section.blocks %}
         <div class="testimonial-slide">
-          {% if block.settings.photo %}
 
+          {% if block.settings.photo %}
+            {% comment %} <img src="{{ block.settings.photo | img_url: '200x' }}" class="testimonial-photo"> {% endcomment %}
           {% endif %}
-          
+
           <p class="testimonial-text">“{{ block.settings.message }}”</p>
 
           <h3 class="testimonial-name">{{ block.settings.name }}</h3>
@@ -16,12 +25,12 @@
           {% if block.settings.role %}
             <p class="testimonial-role">{{ block.settings.role }}</p>
           {% endif %}
+
         </div>
       {% endfor %}
 
     </div>
 
-    <!-- Slider Controls -->
     <div class="testimonial-dots">
       {% for block in section.blocks %}
         <span class="dot" onclick="currentSlide({{ forloop.index }})"></span>
@@ -36,22 +45,28 @@
   padding: 60px 20px;
   text-align: center;
 }
-
 .testimonial-container {
   max-width: 750px;
   margin: auto;
 }
-
+.testimonial-heading {
+  font-size: 34px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.testimonial-subtitle {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 40px;
+}
 .testimonial-slider {
   position: relative;
   overflow: hidden;
 }
-
 .testimonial-slide {
   display: none;
   animation: fade 0.6s ease;
 }
-
 .testimonial-photo {
   width: 80px;
   height: 80px;
@@ -59,30 +74,24 @@
   object-fit: cover;
   margin-bottom: 15px;
 }
-
 .testimonial-text {
   font-size: 20px;
   font-style: italic;
   line-height: 1.5;
   margin-bottom: 20px;
 }
-
 .testimonial-name {
   font-weight: bold;
   font-size: 18px;
   margin-bottom: 4px;
 }
-
 .testimonial-role {
   font-size: 14px;
   color: #777;
 }
-
-/* Slider Dots */
 .testimonial-dots {
   margin-top: 20px;
 }
-
 .dot {
   height: 12px;
   width: 12px;
@@ -92,24 +101,21 @@
   border-radius: 50%;
   cursor: pointer;
 }
-
 .dot.active {
   background: #000;
 }
-
-/* Fade Animation */
 @keyframes fade {
   from { opacity: 0.3; }
   to { opacity: 1; }
 }
-
 </style>
 
 <script>
 let slideIndex = 1;
+let autoSpeed = {{ section.settings.slider_speed | default: 5000 | json }};
+
 showSlides(slideIndex);
 
-// Next/previous controls
 function currentSlide(n) {
   showSlides(slideIndex = n);
 }
@@ -133,26 +139,55 @@ function showSlides(n) {
   dots[slideIndex - 1].classList.add("active");
 }
 
-// Auto Slide
 setInterval(() => {
   slideIndex++;
   showSlides(slideIndex);
-}, 5000);
+}, autoSpeed);
 </script>
 
 {% schema %}
 {
-  "name": "Testimonial",
-  "settings": [],
+  "name": "Testimonial Section",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What Our Customers Say"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Real testimonials from real customers"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+  "type": "range",
+  "id": "slider_speed",
+  "label": "Slider Speed (ms)",
+  "min": 2000,
+  "max": 9000,
+  "step": 500,
+  "default": 5000
+}
+
+  ],
   "blocks": [
     {
-      "name": "Testimonial",
       "type": "testimonial",
+      "name": "Testimonial Item",
       "settings": [
         {
           "type": "image_picker",
           "id": "photo",
-          "label": "Customer Photo"
+          "label": "Photo"
         },
         {
           "type": "text",
@@ -163,8 +198,8 @@ setInterval(() => {
         {
           "type": "text",
           "id": "role",
-          "label": "Role (optional)",
-          "default": "Customer"
+          "label": "Role",
+          "default": "Verified Buyer"
         },
         {
           "type": "textarea",
