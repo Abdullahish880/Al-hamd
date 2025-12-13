@@ -1,6 +1,5 @@
 <section class="creative-banner-section">
   <div class="creative-banner-container">
-
     <!-- Left Content -->
     <div class="cb-left">
       <h1 class="cb-heading">{{ section.settings.heading }}</h1>
@@ -8,15 +7,15 @@
 
       <div class="cb-buttons">
         {% if section.settings.btn1_text != blank %}
-        <a href="{{ section.settings.btn1_link }}" class="cb-btn cb-btn-primary">
-          {{ section.settings.btn1_text }}
-        </a>
+          <a href="{{ section.settings.btn1_link }}" class="cb-btn cb-btn-primary">
+            {{ section.settings.btn1_text }}
+          </a>
         {% endif %}
 
         {% if section.settings.btn2_text != blank %}
-        <a href="{{ section.settings.btn2_link }}" class="cb-btn cb-btn-outline">
-          {{ section.settings.btn2_text }}
-        </a>
+          <a href="{{ section.settings.btn2_link }}" class="cb-btn cb-btn-outline">
+            {{ section.settings.btn2_text }}
+          </a>
         {% endif %}
       </div>
 
@@ -38,17 +37,16 @@
 
     <!-- Right Image -->
     <div class="cb-right">
-
       {% if section.settings.main_image %}
-      {% assign img = section.settings.main_image %}
-      <img 
-        class="cb-main-img"
-        src="{{ img | img_url: 'master' }}"
-        width="{{ img.width }}"
-        height="{{ img.height }}"
-        alt="Banner Image"
-        loading="lazy"
-      />
+        {% assign img = section.settings.main_image %}
+        <img
+          class="cb-main-img"
+          src="{{ img | img_url: 'master' }}"
+          width="{{ img.width }}"
+          height="{{ img.height }}"
+          alt="Banner Image"
+          loading="lazy"
+        >
       {% endif %}
 
       <!-- Bubble Tags -->
@@ -63,217 +61,222 @@
       <div class="cb-tag cb-tag3">
         <span>{{ section.settings.tag3 }}</span>
       </div>
-
     </div>
-
   </div>
 
-<style>
-/* ================================
+  <style>
+    /* ================================
    HERO SECTION BASE
 ================================ */
-.creative-banner-section {
-  padding: 80px 0;
-  background: linear-gradient(to right, #e8f0ff, #ffffff);
-  display: flex;
-  align-items: center;
-}
+    .creative-banner-section {
+      padding: 80px 0;
+      background: linear-gradient(to right, #e8f0ff, #ffffff);
+      display: flex;
+      align-items: center;
+    }
 
-.creative-banner-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 1300px;
-  margin: auto;
-  width: 90%;
-  gap: 40px;
-}
+    .creative-banner-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1300px;
+      margin: auto;
+      width: 90%;
+      gap: 40px;
+    }
 
-/* ================================
+    /* ================================
    LEFT SIDE
 ================================ */
-.cb-left {
-  width: 50%;
-  margin-top:60px;
-  margin-bottom:-60px;
-}
+    .cb-left {
+      width: 50%;
+      margin-top: 60px;
+      margin-bottom: -60px;
+    }
 
-.cb-heading {
-  font-size: clamp(28px, 4vw, 56px);
-  font-weight: 700;
-  line-height: 1.15;
-  margin-bottom: 20px;
-}
+    .cb-heading {
+      font-size: clamp(28px, 4vw, 56px);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
 
-.cb-subtext {
-  font-size: clamp(15px, 1.4vw, 18px);
-  color: #555;
-  line-height: 1.55;
-  max-width: 520px;
-  margin-bottom: 30px;
-}
+    .cb-subtext {
+      font-size: clamp(15px, 1.4vw, 18px);
+      color: #555;
+      line-height: 1.55;
+      max-width: 520px;
+      margin-bottom: 30px;
+    }
 
-/* Buttons */
-.cb-buttons {
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
-}
+    /* Buttons */
+    .cb-buttons {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
 
-.cb-btn {
-  padding: 12px 28px;
-  border-radius: 30px;
-  font-size: 16px;
-  font-weight: 600;
-  text-decoration: none;
-}
+    .cb-btn {
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+    }
 
-.cb-btn-primary {
-  background: #8364ff;
-  color: white;
-}
+    .cb-btn-primary {
+      background: #8364ff;
+      color: white;
+    }
 
-.cb-btn-outline {
-  border: 2px solid #111;
-  color: #111;
-  background: transparent;
-}
+    .cb-btn-outline {
+      border: 2px solid #111;
+      color: #111;
+      background: transparent;
+    }
 
-/* Stats */
-.cb-stats {
-  display: flex;
-  gap: 35px;
-  margin-top: 30px;
-  flex-wrap: wrap;
-}
+    /* Stats */
+    .cb-stats {
+      display: flex;
+      gap: 35px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
 
-.cb-stat-item h3 {
-  font-size: clamp(22px, 3vw, 34px);
-  font-weight: 700;
-}
+    .cb-stat-item h3 {
+      font-size: clamp(22px, 3vw, 34px);
+      font-weight: 700;
+    }
 
-.cb-stat-item p {
-  color: #666;
-  font-size: clamp(13px, 1.2vw, 15px);
-}
+    .cb-stat-item p {
+      color: #666;
+      font-size: clamp(13px, 1.2vw, 15px);
+    }
 
-/* ================================
+    /* ================================
    RIGHT SIDE
 ================================ */
-.cb-right {
-  position: relative;
-  width: 50%;
-}
+    .cb-right {
+      position: relative;
+      width: 50%;
+    }
 
-.cb-main-img {
-  width: 100%;
-  height: auto;
-  max-height: 85vh;
-  object-fit: contain;
-  mix-blend-mode: multiply;
-  margin-left: -6rem;
-}
+    .cb-main-img {
+      width: 100%;
+      height: auto;
+      max-height: 85vh;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+      margin-left: -6rem;
+    }
 
-/* Tags */
-.cb-tag {
-  position: absolute;
-  background: white;
-  padding: 12px 22px;
-  border-radius: 30px;
-  box-shadow: 0px 3px 10px rgba(0,0,0,0.10);
-  font-size: 14px;
-  font-weight: 600;
-  transition: 0.3s ease;
-}
+    /* Tags */
+    .cb-tag {
+      position: absolute;
+      background: white;
+      padding: 12px 22px;
+      border-radius: 30px;
+      box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+      font-size: 14px;
+      font-weight: 600;
+      transition: 0.3s ease;
+    }
 
-.cb-tag:hover {
-  transform: translateY(-10px);
-}
+    .cb-tag:hover {
+      transform: translateY(-10px);
+    }
 
-.cb-tag1 { top: 18%; right: 8%; }
-.cb-tag2 { top: 38%; right: 0%; }
-.cb-tag3 { top: 58%; right: 8%; }
+    .cb-tag1 {
+      top: 18%;
+      right: 8%;
+    }
+    .cb-tag2 {
+      top: 38%;
+      right: 0%;
+    }
+    .cb-tag3 {
+      top: 58%;
+      right: 8%;
+    }
 
-/* ================================
+    /* ================================
    TABLET RESPONSIVE
 ================================ */
-@media (max-width: 992px) {
+    @media (max-width: 992px) {
+      .creative-banner-section {
+        padding: 40px 0;
+        height: auto;
+      }
 
-  .creative-banner-section {
-    padding: 40px 0;
-    height: auto;
-  }
+      .creative-banner-container {
+        flex-direction: column-reverse;
+        text-align: center;
+        gap: 30px;
+      }
 
-  .creative-banner-container {
-    flex-direction: column-reverse;
-    text-align: center;
-    gap: 30px;
-  }
+      .cb-left,
+      .cb-right {
+        width: 100%;
+      }
 
-  .cb-left, .cb-right {
-    width: 100%;
-  }
+      .cb-main-img {
+        margin-left: 0;
+        width: 80%;
+        margin: auto;
+      }
 
-  .cb-main-img {
-    margin-left: 0;
-    width: 80%;
-    margin: auto;
-  }
+      .cb-tag {
+        display: none !important; /* hide tags on tablet for clean layout */
+      }
 
-  .cb-tag {
-    display: none !important; /* hide tags on tablet for clean layout */
-  }
+      .cb-buttons {
+        justify-content: center;
+      }
 
-  .cb-buttons {
-    justify-content: center;
-  }
+      .cb-stats {
+        justify-content: center;
+        margin-top: 20px;
+      }
+    }
 
-  .cb-stats {
-    justify-content: center;
-    margin-top: 20px;
-  }
-}
-
-/* ================================
+    /* ================================
    MOBILE RESPONSIVE
 ================================ */
-@media (max-width: 600px) {
+    @media (max-width: 600px) {
+      .creative-banner-section {
+        padding: 50px 0;
+      }
 
-  .creative-banner-section {
-    padding: 50px 0;
-  }
+      .cb-heading {
+        font-size: 28px;
+      }
 
-  .cb-heading {
-    font-size: 28px;
-  }
+      .cb-subtext {
+        font-size: 15px;
+        margin-bottom: 22px;
+      }
 
-  .cb-subtext {
-    font-size: 15px;
-    margin-bottom: 22px;
-  }
+      .cb-main-img {
+        display: none;
+      }
 
-  .cb-main-img {
-    display:none;
-  }
+      .cb-stat-item h3 {
+        font-size: 24px;
+      }
+    }
 
-  .cb-stat-item h3 {
-    font-size: 24px;
-  }
-}
-
-/* ================================
+    /* ================================
    EXTRA SMALL (375px & below)
 ================================ */
-@media (max-width: 380px) {
-  .cb-heading {
-    font-size: 24px;
-  }
-  .cb-main-img {
-    width: 100%;
-  }
-}
-</style>
-
+    @media (max-width: 380px) {
+      .cb-heading {
+        font-size: 24px;
+      }
+      .cb-main-img {
+        width: 100%;
+      }
+    }
+  </style>
 </section>
 
 {% schema %}
@@ -282,13 +285,18 @@
   "settings": [
     { "type": "text", "id": "heading", "label": "Heading", "default": "Let’s Work Together to Create Wonders with Us" },
 
-    { "type": "textarea", "id": "subtext", "label": "Sub Text", "default": "A visionary creative, crafting captivating wonders through art and design. Adept at turning imagination into extraordinary reality." },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Sub Text",
+      "default": "A visionary creative, crafting captivating wonders through art and design. Adept at turning imagination into extraordinary reality."
+    },
 
     { "type": "text", "id": "btn1_text", "label": "Button 1 Text", "default": "Let's Talk" },
-    { "type": "url",  "id": "btn1_link", "label": "Button 1 Link" },
+    { "type": "url", "id": "btn1_link", "label": "Button 1 Link" },
 
     { "type": "text", "id": "btn2_text", "label": "Button 2 Text", "default": "Start Project" },
-    { "type": "url",  "id": "btn2_link", "label": "Button 2 Link" },
+    { "type": "url", "id": "btn2_link", "label": "Button 2 Link" },
 
     { "type": "text", "id": "stat1_number", "label": "Stat 1 Number", "default": "15+" },
     { "type": "text", "id": "stat1_label", "label": "Stat 1 Label", "default": "years experience" },
@@ -305,8 +313,6 @@
     { "type": "text", "id": "tag2", "label": "Tag 2", "default": "Graphic Design" },
     { "type": "text", "id": "tag3", "label": "Tag 3", "default": "Creative Branding" }
   ],
-  "presets": [
-    { "name": "Creative Banner" }
-  ]
+  "presets": [{ "name": "Creative Banner" }]
 }
 {% endschema %}
