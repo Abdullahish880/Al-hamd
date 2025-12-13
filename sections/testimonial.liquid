@@ -15,7 +15,14 @@
         <div class="testimonial-slide">
 
           {% if block.settings.photo %}
-            {% comment %} <img src="{{ block.settings.photo | img_url: '200x' }}" class="testimonial-photo"> {% endcomment %}
+           <img 
+  src="{{ block.settings.photo | img_url: '200x' }}" 
+  width="200"
+  height="200"
+  class="testimonial-photo"
+  alt="{{ block.settings.name }}"
+>
+
           {% endif %}
 
           <p class="testimonial-text">“{{ block.settings.message }}”</p>
