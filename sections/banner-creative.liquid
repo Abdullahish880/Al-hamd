@@ -40,16 +40,16 @@
     <div class="cb-right">
 
       {% if section.settings.main_image %}
-  {% assign img = section.settings.main_image %}
-  <img 
-    class="cb-main-img"
-    src="{{ img | img_url: 'master' }}"
-    width="{{ img.width }}"
-    height="{{ img.height }}"
-    alt="Banner Image"
-    loading="lazy"
-  />
-{% endif %}
+      {% assign img = section.settings.main_image %}
+      <img 
+        class="cb-main-img"
+        src="{{ img | img_url: 'master' }}"
+        width="{{ img.width }}"
+        height="{{ img.height }}"
+        alt="Banner Image"
+        loading="lazy"
+      />
+      {% endif %}
 
       <!-- Bubble Tags -->
       <div class="cb-tag cb-tag1">
@@ -68,11 +68,15 @@
 
   </div>
 
-  <style>
+<style>
+/* ================================
+   HERO SECTION STYLES
+================================ */
+
 .creative-banner-section {
   padding: 80px 0;
   background: linear-gradient(to right, #e8f0ff, #ffffff);
-  height :100vh;
+  height: 100vh;
 }
 
 .creative-banner-container {
@@ -84,34 +88,44 @@
   gap: 40px;
 }
 
+/* ================================
+   LEFT SIDE — Updated to match Image #2
+================================ */
 .cb-left {
-    margin-top: 20px !important;
   width: 50%;
+  margin-top: 40px !important;
 }
 
 .cb-heading {
-  font-size: 50px;
+  font-size: 56px;        /* Bigger like Image #2 */
   font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 20px;
+  line-height: 1.15;       /* Tighter spacing */
+  margin-bottom: 25px;
+  max-width: 540px;        /* Same text width as screenshot */
 }
 
 .cb-subtext {
-  font-size: 17px;
+  font-size: 18px;         /* Slightly larger */
   color: #555;
-  margin-bottom: 25px;
-  max-width: 90%;
+  margin-bottom: 30px;
+  max-width: 500px;        /* Matches screenshot width */
+  line-height: 1.55;
 }
 
 /* Buttons */
+.cb-buttons {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
 .cb-btn {
-  padding: 12px 28px;
-  border-radius: 25px;
-  font-size: 15px;
+  padding: 14px 32px;
+  border-radius: 30px;
+  font-size: 16px;
   font-weight: 600;
   text-decoration: none;
   display: inline-block;
-  margin-right: 12px;
 }
 
 .cb-btn-primary {
@@ -128,29 +142,34 @@
 /* Stats */
 .cb-stats {
   display: flex;
-  gap: 30px;
-  margin-top: 40px;
+  gap: 40px;
+  margin-top: 35px;
 }
 
 .cb-stat-item h3 {
-  font-size: 32px;
+  font-size: 34px;
   font-weight: 700;
 }
 
 .cb-stat-item p {
-  color: #444;
-  font-size: 14px;
+  color: #666;
+  font-size: 15px;
 }
 
-/* Right Image */
+/* ================================
+   RIGHT SIDE   
+================================ */
+
 .cb-right {
   position: relative;
   width: 50%;
 }
 
 .cb-main-img {
-  width: 100%;
-  border-radius: 10px;
+  height: 88.5vh;
+  margin-left:-10rem !important;
+  mix-blend-mode: multiply;
+  
 }
 
 /* Tags */
@@ -164,14 +183,17 @@
   font-weight: 600;
 }
 
-.cb-tag1 { top: 40px; right: 40px; }
-.cb-tag2 { top: 180px; right: -10px; }
-.cb-tag3 { top: 310px; right: 40px; }
+.cb-tag:hover{
+    transform: translateY(-12px);
+  transition: 0.4s ease;
+}
+.cb-tag1 { top: 150px; right: 40px; }
+.cb-tag2 { top: 280px; right: -10px; }
+.cb-tag3 { top: 380px; right: 40px; }
 
-/* ----------------------------- */
-/*        MOBILE RESPONSIVE      */
-/* ----------------------------- */
-
+/* ================================
+   RESPONSIVE
+================================ */
 @media (max-width: 992px) {
 
   .creative-banner-container {
@@ -185,12 +207,13 @@
   }
 
   .cb-right {
-    display: none !important; /* Hide right side */
+    display: none !important; 
   }
 
   .cb-heading {
     font-size: 36px;
     line-height: 1.3;
+    max-width: 100%;
   }
 
   .cb-subtext {
@@ -232,8 +255,7 @@
   }
 }
 
-
-  </style>
+</style>
 
 </section>
 
