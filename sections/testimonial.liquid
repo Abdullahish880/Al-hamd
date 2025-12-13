@@ -9,35 +9,40 @@
       <p class="testimonial-subtitle">{{ section.settings.subtitle }}</p>
     {% endif %}
 
-    <div class="testimonial-slider" id="testimonialSlider">
+    <div class="testimonial-slider">
 
       {% for block in section.blocks %}
-        <div class="testimonial-slide">
+        {% if block.type == 'testimonial' %}
+          <div class="testimonial-slide">
 
-          {% if block.settings.photo %}
-           <img 
-  src="{{ block.settings.photo | img_url: '200x' }}" 
-  width="200"
-  height="200"
-  class="testimonial-photo"
-  alt="{{ block.settings.name }}"
->
+            {% if block.settings.photo %}
+              <img 
+                src="{{ block.settings.photo | img_url: '200x200' }}" 
+                width="200" 
+                height="200" 
+                class="testimonial-photo" 
+                alt="{{ block.settings.name }}"
+              >
+            {% endif %}
 
-          {% endif %}
+            <p class="testimonial-text">“{{ block.settings.message }}”</p>
+            <h3 class="testimonial-name">{{ block.settings.name }}</h3>
 
-          <p class="testimonial-text">“{{ block.settings.message }}”</p>
+            {% if block.settings.role %}
+              <p class="testimonial-role">{{ block.settings.role }}</p>
+            {% endif %}
 
-          <h3 class="testimonial-name">{{ block.settings.name }}</h3>
-
-          {% if block.settings.role %}
-            <p class="testimonial-role">{{ block.settings.role }}</p>
-          {% endif %}
-
-        </div>
+          </div>
+        {% endif %}
       {% endfor %}
+
+      <!-- Arrows -->
+      <span class="arrow prev" onclick="plusSlides(-1)">&#10094;</span>
+      <span class="arrow next" onclick="plusSlides(1)">&#10095;</span>
 
     </div>
 
+    <!-- Dots -->
     <div class="testimonial-dots">
       {% for block in section.blocks %}
         <span class="dot" onclick="currentSlide({{ forloop.index }})"></span>
@@ -48,72 +53,23 @@
 </section>
 
 <style>
-.testimonial-section {
-  padding: 60px 20px;
-  text-align: center;
-}
-.testimonial-container {
-  max-width: 750px;
-  margin: auto;
-}
-.testimonial-heading {
-  font-size: 34px;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-.testimonial-subtitle {
-  font-size: 16px;
-  color: #666;
-  margin-bottom: 40px;
-}
-.testimonial-slider {
-  position: relative;
-  overflow: hidden;
-}
-.testimonial-slide {
-  animation: fade 0.6s ease;
-}
-.testimonial-photo {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 15px;
-}
-.testimonial-text {
-  font-size: 20px;
-  font-style: italic;
-  line-height: 1.5;
-  margin-bottom: 20px;
-}
-.testimonial-name {
-  font-weight: bold;
-  font-size: 18px;
-  margin-bottom: 4px;
-}
-.testimonial-role {
-  font-size: 14px;
-  color: #777;
-}
-.testimonial-dots {
-  margin-top: 20px;
-}
-.dot {
-  height: 12px;
-  width: 12px;
-  margin: 0 5px;
-  background: #ccc;
-  display: inline-block;
-  border-radius: 50%;
-  cursor: pointer;
-}
-.dot.active {
-  background: #000;
-}
-@keyframes fade {
-  from { opacity: 0.3; }
-  to { opacity: 1; }
-}
+.testimonial-section { padding: 60px 20px; text-align: center; }
+.testimonial-container { max-width: 750px; margin: auto; }
+.testimonial-heading { font-size: 34px; font-weight: 700; margin-bottom: 10px; }
+.testimonial-subtitle { font-size: 16px; color: #666; margin-bottom: 40px; }
+.testimonial-slider { position: relative; overflow: hidden; }
+.testimonial-slide { display: none; animation: fade 0.6s ease; }
+.testimonial-photo { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; }
+.testimonial-text { font-size: 20px; font-style: italic; line-height: 1.5; margin-bottom: 20px; }
+.testimonial-name { font-weight: bold; font-size: 18px; margin-bottom: 4px; }
+.testimonial-role { font-size: 14px; color: #777; }
+.testimonial-dots { margin-top: 20px; }
+.dot { height: 12px; width: 12px; margin: 0 5px; background: #ccc; display: inline-block; border-radius: 50%; cursor: pointer; }
+.dot.active { background: #000; }
+.arrow { cursor: pointer; position: absolute; top: 50%; font-size: 26px; padding: 10px; border-radius: 50%; background: #f1f1f1; user-select: none; transform: translateY(-50%); }
+.prev { left: 10px; }
+.next { right: 10px; }
+@keyframes fade { from { opacity: 0.3; } to { opacity: 1; } }
 </style>
 
 <script>
@@ -122,24 +78,20 @@ let autoSpeed = {{ section.settings.slider_speed | default: 5000 | json }};
 
 showSlides(slideIndex);
 
-function currentSlide(n) {
-  showSlides(slideIndex = n);
-}
+function plusSlides(n) { showSlides(slideIndex += n); }
+function currentSlide(n) { showSlides(slideIndex = n); }
 
 function showSlides(n) {
   let slides = document.getElementsByClassName("testimonial-slide");
   let dots = document.getElementsByClassName("dot");
 
+  if(slides.length === 0) return;
+
   if (n > slides.length) slideIndex = 1;
   if (n < 1) slideIndex = slides.length;
 
-  for (let i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
-  }
-
-  for (let i = 0; i < dots.length; i++) {
-    dots[i].classList.remove("active");
-  }
+  for (let slide of slides) slide.style.display = "none";
+  for (let dot of dots) dot.classList.remove("active");
 
   slides[slideIndex - 1].style.display = "block";
   dots[slideIndex - 1].classList.add("active");
@@ -156,69 +108,37 @@ setInterval(() => {
   "name": "Testimonial Section",
   "tag": "section",
   "settings": [
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "What Our Customers Say"
-    },
-    {
-      "type": "text",
-      "id": "subtitle",
-      "label": "Subtitle",
-      "default": "Real testimonials from real customers"
-    },
-    {
-      "type": "color",
-      "id": "bg_color",
-      "label": "Background Color",
-      "default": "#ffffff"
-    },
-    {
-  "type": "range",
-  "id": "slider_speed",
-  "label": "Slider Speed (ms)",
-  "min": 2000,
-  "max": 9000,
-  "step": 500,
-  "default": 5000
-}
-
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What Our Customers Say" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Real testimonials from real customers" },
+    { "type": "color", "id": "bg_color", "label": "Background Color", "default": "#ffffff" },
+    { "type": "range", "id": "slider_speed", "label": "Slider Speed (ms)", "min": 2000, "max": 9000, "step": 500, "default": 5000 }
   ],
   "blocks": [
     {
       "type": "testimonial",
       "name": "Testimonial Item",
       "settings": [
-        {
-          "type": "image_picker",
-          "id": "photo",
-          "label": "Photo"
-        },
-        {
-          "type": "text",
-          "id": "name",
-          "label": "Name",
-          "default": "John Doe"
-        },
-        {
-          "type": "text",
-          "id": "role",
-          "label": "Role",
-          "default": "Verified Buyer"
-        },
-        {
-          "type": "textarea",
-          "id": "message",
-          "label": "Testimonial Message",
-          "default": "This product is amazing! Highly recommended."
-        }
+        { "type": "image_picker", "id": "photo", "label": "Photo" },
+        { "type": "text", "id": "name", "label": "Name", "default": "John Doe" },
+        { "type": "text", "id": "role", "label": "Role", "default": "Verified Buyer" },
+        { "type": "textarea", "id": "message", "label": "Message", "default": "This product is amazing! Highly recommended." }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Testimonial Section"
+      "name": "Testimonial Section",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "name": "John Doe",
+            "role": "Verified Buyer",
+            "message": "This product is amazing!",
+            "photo": ""
+          }
+        }
+      ]
     }
   ]
 }
