@@ -9,37 +9,37 @@
       <p class="testimonial-subtitle">{{ section.settings.subtitle }}</p>
     {% endif %}
 
-    <div class="testimonial-slider">
+    <div class="testimonial-slider-wrapper">
+      <div class="testimonial-slider" id="testimonialSlider">
 
-      {% for block in section.blocks %}
-        {% if block.type == 'testimonial' %}
-          <div class="testimonial-slide">
+        {% for block in section.blocks %}
+          {% if block.type == 'testimonial' %}
+            <div class="testimonial-slide">
+              {% if block.settings.photo %}
+                <img 
+                  src="{{ block.settings.photo | img_url: '200x200' }}" 
+                  width="80" 
+                  height="80" 
+                  class="testimonial-photo" 
+                  alt="{{ block.settings.name }}"
+                >
+              {% endif %}
 
-            {% if block.settings.photo %}
-              <img 
-                src="{{ block.settings.photo | img_url: '200x200' }}" 
-                width="1200" 
-                height="1200" 
-                class="testimonial-photo" 
-                alt="{{ block.settings.name }}"
-              >
-            {% endif %}
+              <p class="testimonial-text">“{{ block.settings.message }}”</p>
+              <h3 class="testimonial-name">{{ block.settings.name }}</h3>
 
-            <p class="testimonial-text">“{{ block.settings.message }}”</p>
-            <h3 class="testimonial-name">{{ block.settings.name }}</h3>
+              {% if block.settings.role %}
+                <p class="testimonial-role">{{ block.settings.role }}</p>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
 
-            {% if block.settings.role %}
-              <p class="testimonial-role">{{ block.settings.role }}</p>
-            {% endif %}
-
-          </div>
-        {% endif %}
-      {% endfor %}
+      </div>
 
       <!-- Arrows -->
       <span class="arrow prev" onclick="plusSlides(-1)">&#10094;</span>
       <span class="arrow next" onclick="plusSlides(1)">&#10095;</span>
-
     </div>
 
     <!-- Dots -->
@@ -54,53 +54,65 @@
 
 <style>
 .testimonial-section { padding: 60px 20px; text-align: center; }
-.testimonial-container { max-width: 750px; margin: auto; }
+.testimonial-container { max-width: 800px; margin: auto; }
 .testimonial-heading { font-size: 34px; font-weight: 700; margin-bottom: 10px; }
 .testimonial-subtitle { font-size: 16px; color: #666; margin-bottom: 40px; }
-.testimonial-slider { position: relative; overflow: hidden; }
-.testimonial-slide { display: none; animation: fade 0.6s ease; }
+
+.testimonial-slider-wrapper { position: relative; overflow: hidden; }
+.testimonial-slider { display: flex; transition: transform 0.6s ease; }
+.testimonial-slide { min-width: 100%; box-sizing: border-box; text-align: center; }
+
 .testimonial-photo { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; }
 .testimonial-text { font-size: 20px; font-style: italic; line-height: 1.5; margin-bottom: 20px; }
 .testimonial-name { font-weight: bold; font-size: 18px; margin-bottom: 4px; }
 .testimonial-role { font-size: 14px; color: #777; }
+
 .testimonial-dots { margin-top: 20px; }
 .dot { height: 12px; width: 12px; margin: 0 5px; background: #ccc; display: inline-block; border-radius: 50%; cursor: pointer; }
 .dot.active { background: #000; }
-.arrow { cursor: pointer; position: absolute; top: 50%; font-size: 26px; padding: 10px; border-radius: 50%; background: #f1f1f1; user-select: none; transform: translateY(-50%); }
+
+.arrow { cursor: pointer; position: absolute; top: 50%; font-size: 26px; padding: 20px; border-radius: 50%; background: #f1f1f1; user-select: none; transform: translateY(-50%); }
 .prev { left: 10px; }
 .next { right: 10px; }
-@keyframes fade { from { opacity: 0.3; } to { opacity: 1; } }
 </style>
 
 <script>
-let slideIndex = 1;
+let slideIndex = 0;
+let slides = document.querySelectorAll(".testimonial-slide");
+let totalSlides = slides.length;
 let autoSpeed = {{ section.settings.slider_speed | default: 5000 | json }};
+let sliderWrapper = document.getElementById("testimonialSlider");
 
-showSlides(slideIndex);
+function showSlides(index) {
+  if (index >= totalSlides) slideIndex = 0;
+  if (index < 0) slideIndex = totalSlides - 1;
 
-function plusSlides(n) { showSlides(slideIndex += n); }
-function currentSlide(n) { showSlides(slideIndex = n); }
+  sliderWrapper.style.transform = `translateX(-${slideIndex * 100}%)`;
 
-function showSlides(n) {
-  let slides = document.getElementsByClassName("testimonial-slide");
+  // update dots
   let dots = document.getElementsByClassName("dot");
-
-  if(slides.length === 0) return;
-
-  if (n > slides.length) slideIndex = 1;
-  if (n < 1) slideIndex = slides.length;
-
-  for (let slide of slides) slide.style.display = "none";
   for (let dot of dots) dot.classList.remove("active");
-
-  slides[slideIndex - 1].style.display = "block";
-  dots[slideIndex - 1].classList.add("active");
+  if (dots[slideIndex]) dots[slideIndex].classList.add("active");
 }
 
+function plusSlides(n) {
+  slideIndex += n;
+  showSlides(slideIndex);
+}
+
+function currentSlide(n) {
+  slideIndex = n - 1;
+  showSlides(slideIndex);
+}
+
+// Auto-play
 setInterval(() => {
   slideIndex++;
   showSlides(slideIndex);
 }, autoSpeed);
+
+// Initialize first slide
+showSlides(slideIndex);
 </script>
 
 {% schema %}
