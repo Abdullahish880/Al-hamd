@@ -1,0 +1,184 @@
+<section class="testimonial-section">
+  <div class="testimonial-container">
+
+    <div class="testimonial-slider" id="testimonialSlider">
+
+      {% for block in section.blocks %}
+        <div class="testimonial-slide">
+          {% if block.settings.photo %}
+
+          {% endif %}
+          
+          <p class="testimonial-text">“{{ block.settings.message }}”</p>
+
+          <h3 class="testimonial-name">{{ block.settings.name }}</h3>
+
+          {% if block.settings.role %}
+            <p class="testimonial-role">{{ block.settings.role }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+    </div>
+
+    <!-- Slider Controls -->
+    <div class="testimonial-dots">
+      {% for block in section.blocks %}
+        <span class="dot" onclick="currentSlide({{ forloop.index }})"></span>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+<style>
+.testimonial-section {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.testimonial-container {
+  max-width: 750px;
+  margin: auto;
+}
+
+.testimonial-slider {
+  position: relative;
+  overflow: hidden;
+}
+
+.testimonial-slide {
+  display: none;
+  animation: fade 0.6s ease;
+}
+
+.testimonial-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.testimonial-text {
+  font-size: 20px;
+  font-style: italic;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.testimonial-name {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.testimonial-role {
+  font-size: 14px;
+  color: #777;
+}
+
+/* Slider Dots */
+.testimonial-dots {
+  margin-top: 20px;
+}
+
+.dot {
+  height: 12px;
+  width: 12px;
+  margin: 0 5px;
+  background: #ccc;
+  display: inline-block;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.dot.active {
+  background: #000;
+}
+
+/* Fade Animation */
+@keyframes fade {
+  from { opacity: 0.3; }
+  to { opacity: 1; }
+}
+
+</style>
+
+<script>
+let slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  let slides = document.getElementsByClassName("testimonial-slide");
+  let dots = document.getElementsByClassName("dot");
+
+  if (n > slides.length) slideIndex = 1;
+  if (n < 1) slideIndex = slides.length;
+
+  for (let i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+
+  for (let i = 0; i < dots.length; i++) {
+    dots[i].classList.remove("active");
+  }
+
+  slides[slideIndex - 1].style.display = "block";
+  dots[slideIndex - 1].classList.add("active");
+}
+
+// Auto Slide
+setInterval(() => {
+  slideIndex++;
+  showSlides(slideIndex);
+}, 5000);
+</script>
+
+{% schema %}
+{
+  "name": "Testimonial",
+  "settings": [],
+  "blocks": [
+    {
+      "name": "Testimonial",
+      "type": "testimonial",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "photo",
+          "label": "Customer Photo"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "John Doe"
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Role (optional)",
+          "default": "Customer"
+        },
+        {
+          "type": "textarea",
+          "id": "message",
+          "label": "Testimonial Message",
+          "default": "This product is amazing! Highly recommended."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonial Section"
+    }
+  ]
+}
+{% endschema %}
