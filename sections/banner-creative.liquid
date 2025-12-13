@@ -70,61 +70,62 @@
 
 <style>
 /* ================================
-   HERO SECTION STYLES
+   HERO SECTION BASE
 ================================ */
-
 .creative-banner-section {
   padding: 80px 0;
   background: linear-gradient(to right, #e8f0ff, #ffffff);
+  display: flex;
+  align-items: center;
 }
 
 .creative-banner-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 1200px;
+  max-width: 1300px;
   margin: auto;
+  width: 90%;
   gap: 40px;
 }
 
 /* ================================
-   LEFT SIDE — Updated to match Image #2
+   LEFT SIDE
 ================================ */
 .cb-left {
   width: 50%;
-  margin-top: 40px !important;
+  margin-top:60px;
+  margin-bottom:-60px;
 }
 
 .cb-heading {
-  font-size: 56px;        /* Bigger like Image #2 */
+  font-size: clamp(28px, 4vw, 56px);
   font-weight: 700;
-  line-height: 1.15;       /* Tighter spacing */
-  margin-bottom: 25px;
-  max-width: 540px;        /* Same text width as screenshot */
+  line-height: 1.15;
+  margin-bottom: 20px;
 }
 
 .cb-subtext {
-  font-size: 18px;         /* Slightly larger */
+  font-size: clamp(15px, 1.4vw, 18px);
   color: #555;
-  margin-bottom: 30px;
-  max-width: 500px;        /* Matches screenshot width */
   line-height: 1.55;
+  max-width: 520px;
+  margin-bottom: 30px;
 }
 
 /* Buttons */
 .cb-buttons {
   display: flex;
   gap: 15px;
-  align-items: center;
+  flex-wrap: wrap;
 }
 
 .cb-btn {
-  padding: 14px 32px;
+  padding: 12px 28px;
   border-radius: 30px;
   font-size: 16px;
   font-weight: 600;
   text-decoration: none;
-  display: inline-block;
 }
 
 .cb-btn-primary {
@@ -141,34 +142,36 @@
 /* Stats */
 .cb-stats {
   display: flex;
-  gap: 40px;
-  margin-top: 35px;
+  gap: 35px;
+  margin-top: 30px;
+  flex-wrap: wrap;
 }
 
 .cb-stat-item h3 {
-  font-size: 34px;
+  font-size: clamp(22px, 3vw, 34px);
   font-weight: 700;
 }
 
 .cb-stat-item p {
   color: #666;
-  font-size: 15px;
+  font-size: clamp(13px, 1.2vw, 15px);
 }
 
 /* ================================
-   RIGHT SIDE   
+   RIGHT SIDE
 ================================ */
-
 .cb-right {
   position: relative;
   width: 50%;
 }
 
 .cb-main-img {
-  height: 88.5vh;
-  margin-left:-10rem !important;
+  width: 100%;
+  height: auto;
+  max-height: 85vh;
+  object-fit: contain;
   mix-blend-mode: multiply;
-  
+  margin-left: -6rem;
 }
 
 /* Tags */
@@ -180,66 +183,65 @@
   box-shadow: 0px 3px 10px rgba(0,0,0,0.10);
   font-size: 14px;
   font-weight: 600;
+  transition: 0.3s ease;
 }
 
-.cb-tag:hover{
-    transform: translateY(-12px);
-  transition: 0.4s ease;
+.cb-tag:hover {
+  transform: translateY(-10px);
 }
-.cb-tag1 { top: 150px; right: 40px; }
-.cb-tag2 { top: 280px; right: -10px; }
-.cb-tag3 { top: 380px; right: 40px; }
+
+.cb-tag1 { top: 18%; right: 8%; }
+.cb-tag2 { top: 38%; right: 0%; }
+.cb-tag3 { top: 58%; right: 8%; }
 
 /* ================================
-   RESPONSIVE
+   TABLET RESPONSIVE
 ================================ */
 @media (max-width: 992px) {
 
-  .creative-banner-container {
-    flex-direction: column;
-    text-align: center;
-    gap: 50px;
+  .creative-banner-section {
+    padding: 40px 0;
+    height: auto;
   }
 
-  .cb-left {
+  .creative-banner-container {
+    flex-direction: column-reverse;
+    text-align: center;
+    gap: 30px;
+  }
+
+  .cb-left, .cb-right {
     width: 100%;
   }
 
-  .cb-right {
-    display: none !important; 
+  .cb-main-img {
+    margin-left: 0;
+    width: 80%;
+    margin: auto;
   }
 
-  .cb-heading {
-    font-size: 36px;
-    line-height: 1.3;
-    max-width: 100%;
-  }
-
-  .cb-subtext {
-    margin: 0 auto 25px;
-    max-width: 95%;
-    font-size: 16px;
+  .cb-tag {
+    display: none !important; /* hide tags on tablet for clean layout */
   }
 
   .cb-buttons {
-    display: flex;
     justify-content: center;
-    gap: 12px;
-    flex-wrap: wrap;
   }
 
   .cb-stats {
     justify-content: center;
-    gap: 25px;
-    margin-top: 30px;
-  }
-
-  .cb-stat-item h3 {
-    font-size: 28px;
+    margin-top: 20px;
   }
 }
 
-@media (max-width: 480px) {
+/* ================================
+   MOBILE RESPONSIVE
+================================ */
+@media (max-width: 600px) {
+
+  .creative-banner-section {
+    padding: 50px 0;
+  }
 
   .cb-heading {
     font-size: 28px;
@@ -247,13 +249,29 @@
 
   .cb-subtext {
     font-size: 15px;
+    margin-bottom: 22px;
+  }
+
+  .cb-main-img {
+    display:none;
   }
 
   .cb-stat-item h3 {
-    font-size: 26px;
+    font-size: 24px;
   }
 }
 
+/* ================================
+   EXTRA SMALL (375px & below)
+================================ */
+@media (max-width: 380px) {
+  .cb-heading {
+    font-size: 24px;
+  }
+  .cb-main-img {
+    width: 100%;
+  }
+}
 </style>
 
 </section>
