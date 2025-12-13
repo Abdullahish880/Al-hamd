@@ -1,0 +1,224 @@
+<section class="creative-banner-section">
+  <div class="creative-banner-container">
+
+    <!-- Left Content -->
+    <div class="cb-left">
+      <h1 class="cb-heading">{{ section.settings.heading }}</h1>
+      <p class="cb-subtext">{{ section.settings.subtext }}</p>
+
+      <div class="cb-buttons">
+        {% if section.settings.btn1_text != blank %}
+        <a href="{{ section.settings.btn1_link }}" class="cb-btn cb-btn-primary">
+          {{ section.settings.btn1_text }}
+        </a>
+        {% endif %}
+
+        {% if section.settings.btn2_text != blank %}
+        <a href="{{ section.settings.btn2_link }}" class="cb-btn cb-btn-outline">
+          {{ section.settings.btn2_text }}
+        </a>
+        {% endif %}
+      </div>
+
+      <div class="cb-stats">
+        <div class="cb-stat-item">
+          <h3>{{ section.settings.stat1_number }}</h3>
+          <p>{{ section.settings.stat1_label }}</p>
+        </div>
+        <div class="cb-stat-item">
+          <h3>{{ section.settings.stat2_number }}</h3>
+          <p>{{ section.settings.stat2_label }}</p>
+        </div>
+        <div class="cb-stat-item">
+          <h3>{{ section.settings.stat3_number }}</h3>
+          <p>{{ section.settings.stat3_label }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Image -->
+    <div class="cb-right">
+
+      {% if section.settings.main_image %}
+  {% assign img = section.settings.main_image %}
+  <img 
+    class="cb-main-img"
+    src="{{ img | img_url: 'master' }}"
+    width="{{ img.width }}"
+    height="{{ img.height }}"
+    alt="Banner Image"
+    loading="lazy"
+  />
+{% endif %}
+
+      <!-- Bubble Tags -->
+      <div class="cb-tag cb-tag1">
+        <span>{{ section.settings.tag1 }}</span>
+      </div>
+
+      <div class="cb-tag cb-tag2">
+        <span>{{ section.settings.tag2 }}</span>
+      </div>
+
+      <div class="cb-tag cb-tag3">
+        <span>{{ section.settings.tag3 }}</span>
+      </div>
+
+    </div>
+
+  </div>
+
+  <style>
+    .creative-banner-section {
+      padding: 80px 0;
+      background: linear-gradient(to right, #e8f0ff, #ffffff);
+    }
+
+    .creative-banner-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: auto;
+      gap: 40px;
+    }
+
+    .cb-left {
+      width: 50%;
+    }
+
+    .cb-heading {
+      font-size: 50px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .cb-subtext {
+      font-size: 17px;
+      color: #555;
+      margin-bottom: 25px;
+      max-width: 90%;
+    }
+
+    /* Buttons */
+    .cb-btn {
+      padding: 12px 28px;
+      border-radius: 25px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+      margin-right: 12px;
+    }
+
+    .cb-btn-primary {
+      background: #8364ff;
+      color: white;
+    }
+
+    .cb-btn-outline {
+      border: 2px solid #111;
+      color: #111;
+      background: transparent;
+    }
+
+    /* Stats */
+    .cb-stats {
+      display: flex;
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .cb-stat-item h3 {
+      font-size: 32px;
+      font-weight: 700;
+    }
+
+    .cb-stat-item p {
+      color: #444;
+      font-size: 14px;
+    }
+
+    /* Right Image */
+    .cb-right {
+      position: relative;
+      width: 50%;
+    }
+
+    .cb-main-img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    /* Tags */
+    .cb-tag {
+      position: absolute;
+      background: white;
+      padding: 12px 22px;
+      border-radius: 30px;
+      box-shadow: 0px 3px 10px rgba(0,0,0,0.10);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .cb-tag1 { top: 40px; right: 40px; }
+    .cb-tag2 { top: 180px; right: -10px; }
+    .cb-tag3 { top: 310px; right: 40px; }
+
+    @media (max-width: 768px) {
+      .creative-banner-container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .cb-left, .cb-right {
+        width: 100%;
+      }
+
+      .cb-stats {
+        justify-content: center;
+      }
+
+      .cb-right {
+        margin-top: 40px;
+      }
+    }
+  </style>
+
+</section>
+
+{% schema %}
+{
+  "name": "Creative Banner",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Let’s Work Together to Create Wonders with Us" },
+
+    { "type": "textarea", "id": "subtext", "label": "Sub Text", "default": "A visionary creative, crafting captivating wonders through art and design. Adept at turning imagination into extraordinary reality." },
+
+    { "type": "text", "id": "btn1_text", "label": "Button 1 Text", "default": "Let's Talk" },
+    { "type": "url",  "id": "btn1_link", "label": "Button 1 Link" },
+
+    { "type": "text", "id": "btn2_text", "label": "Button 2 Text", "default": "Start Project" },
+    { "type": "url",  "id": "btn2_link", "label": "Button 2 Link" },
+
+    { "type": "text", "id": "stat1_number", "label": "Stat 1 Number", "default": "15+" },
+    { "type": "text", "id": "stat1_label", "label": "Stat 1 Label", "default": "years experience" },
+
+    { "type": "text", "id": "stat2_number", "label": "Stat 2 Number", "default": "26K" },
+    { "type": "text", "id": "stat2_label", "label": "Stat 2 Label", "default": "projects success" },
+
+    { "type": "text", "id": "stat3_number", "label": "Stat 3 Number", "default": "98%" },
+    { "type": "text", "id": "stat3_label", "label": "Stat 3 Label", "default": "satisfied rate" },
+
+    { "type": "image_picker", "id": "main_image", "label": "Main Image" },
+
+    { "type": "text", "id": "tag1", "label": "Tag 1", "default": "Illustration" },
+    { "type": "text", "id": "tag2", "label": "Tag 2", "default": "Graphic Design" },
+    { "type": "text", "id": "tag3", "label": "Tag 3", "default": "Creative Branding" }
+  ],
+  "presets": [
+    { "name": "Creative Banner" }
+  ]
+}
+{% endschema %}
