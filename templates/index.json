@@ -431,11 +431,22 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "testimonial_3CFfk7": {
+      "type": "testimonial",
+      "name": "Testimonial Section",
+      "settings": {
+        "heading": "What Our Customers Say",
+        "subtitle": "Real testimonials from real customers",
+        "bg_color": "#661717",
+        "slider_speed": 3500
+      }
     }
   },
   "order": [
     "hero_jVaWmY",
     "collection_list_KdaVk7",
-    "product_list_b6EDmp"
+    "product_list_b6EDmp",
+    "testimonial_3CFfk7"
   ]
 }
