@@ -1,4 +1,4 @@
-<section class="testimonial-section" style="background: {{ section.settings.bg_color }};">
+<section class="testimonial-section">
   <div class="testimonial-container">
 
     {% if section.settings.heading != blank %}
@@ -11,38 +11,33 @@
 
     <div class="testimonial-slider-wrapper">
       <!-- Slider -->
-      <div class="testimonial-slider " id="testimonialSlider">
+      <div class="testimonial-slider" id="testimonialSlider">
 
         {% for block in section.blocks %}
-          {% if block.type == 'testimonial' %}
-            <div class="testimonial-slide" style="background: {{ block.settings.card_bg_color }}; border: 1px solid {{ block.settings.card_border_color }}; border-radius: 12px; padding: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
-              {% if block.settings.photo %}
-                <img 
-                  src="{{ block.settings.photo | img_url: '200x200' }}" 
-                  width="80" 
-                  height="80" 
-                  class="testimonial-photo" 
-                  alt="{{ block.settings.name }}"
-                >
-              {% endif %}
-
-              <p class="testimonial-text">“{{ block.settings.message }}”</p>
-              <h3 class="testimonial-name">{{ block.settings.name }}</h3>
-
-              {% if block.settings.role %}
-                <p class="testimonial-role">{{ block.settings.role }}</p>
-              {% endif %}
-            </div>
+        <div class="testimonial-slide" style="background: {{ block.settings.card_bg_color }}; border:1px solid {{ block.settings.card_border_color }}">
+          {% if block.settings.photo %}
+            <img src="{{ block.settings.photo | img_url: '200x200' }}"
+                 width="80" height="80"
+                 class="testimonial-photo"
+                 alt="{{ block.settings.name }}">
           {% endif %}
+
+          <p class="testimonial-text">“{{ block.settings.message }}”</p>
+          <h3 class="testimonial-name">{{ block.settings.name }}</h3>
+
+          {% if block.settings.role %}
+            <p class="testimonial-role">{{ block.settings.role }}</p>
+          {% endif %}
+        </div>
         {% endfor %}
 
       </div>
-
-     
-     
     </div>
- <span class="arrow prev" onclick="moveLeft()">&#10094;</span>
-      <span class="arrow next" onclick="moveRight()">&#10095;</span>
+
+    <!-- Arrows -->
+    <span class="arrow prev" onclick="moveLeft()">&#10094;</span>
+    <span class="arrow next" onclick="moveRight()">&#10095;</span>
+
     <!-- Dots -->
     <div class="testimonial-dots">
       {% for block in section.blocks %}
@@ -54,108 +49,211 @@
 </section>
 
 <style>
-.testimonial-section { padding: 60px 20px; text-align: center; }
-.testimonial-container { max-width: 1000px; margin: auto; position: relative; }
-.testimonial-heading { font-size: 34px; font-weight: 700; margin-bottom: 10px; }
-.testimonial-subtitle { font-size: 16px; color: #666; margin-bottom: 40px; }
+/* ================================
+   Banner-style Background
+================================ */
+.testimonial-section {
+  padding: 80px 20px;
+  background: linear-gradient(to right, #e8f0ff, #ffffff);
+  text-align: center;
+}
 
-.testimonial-slider-wrapper { position: relative; overflow: hidden; }
-.testimonial-slider { display: flex; transition: transform 0.5s ease; }
-.testimonial-slide { min-width: 100%; box-sizing: border-box; text-align: center; }
+/* ================================
+   Layout
+================================ */
+.testimonial-container {
+  max-width: 900px;
+  margin: auto;
+  position: relative;
+}
 
-.testimonial-photo { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; }
-.testimonial-text { font-size: 20px; font-style: italic; line-height: 1.5; margin-bottom: 20px; }
-.testimonial-name { font-weight: bold; font-size: 18px; margin-bottom: 4px; }
-.testimonial-role { font-size: 14px; color: #777; }
+.testimonial-heading {
+  font-size: clamp(26px, 4vw, 40px);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
 
-.testimonial-dots { margin-top: 20px; }
-.dot { height: 12px; width: 12px; margin: 0 5px; background: #ccc; display: inline-block; border-radius: 50%; cursor: pointer; }
-.dot.active { background: #000; }
+.testimonial-subtitle {
+  font-size: clamp(14px, 2vw, 18px);
+  color: #666;
+  margin-bottom: 30px;
+}
 
-.arrow { cursor: pointer; position: absolute; top: 60%; font-size: 26px; padding: 20px; border-radius: 50%; background: #f1f1f1; user-select: none; transform: translateY(-50%); z-index: 10; }
-.prev { left: -70px; }   /* outside the box */
-.next { right: -70px; }  /* outside the box */
-@media (max-width: 768px) {
-  
-  
+/* Slider */
+.testimonial-slider-wrapper {
+  position: relative;
+  overflow: hidden;
+}
 
-  /* Move arrows INSIDE on mobile */
+.testimonial-slider {
+  display: flex;
+  transition: transform 0.5s ease;
+  width: 100%;
+}
+
+.testimonial-slide {
+  min-width: 100%;
+  padding: 35px;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  box-sizing: border-box;
+}
+
+/* Slide Content */
+.testimonial-photo {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.testimonial-text {
+  font-size: clamp(16px, 2vw, 20px);
+  font-style: italic;
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+.testimonial-name {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.testimonial-role {
+  font-size: 14px;
+  color: #777;
+}
+
+/* Dots */
+.testimonial-dots {
+  margin-top: 20px;
+}
+
+.dot {
+  height: 12px;
+  width: 12px;
+  background: #ccc;
+  display: inline-block;
+  border-radius: 50%;
+  margin: 0 4px;
+  cursor: pointer;
+}
+
+.dot.active {
+  background: #000;
+}
+
+/* Arrows (desktop) */
+.arrow {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  font-size: 30px;
+  padding: 18px;
+  border-radius: 50%;
+  background: white;
+  transform: translateY(-50%);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  user-select: none;
+  z-index: 10;
+}
+
+.prev { left: -70px; }
+.next { right: -70px; }
+
+/* ================================
+   Tablet
+================================ */
+@media (max-width: 900px) {
+
+  .arrow {
+    padding: 14px;
+    font-size: 24px;
+  }
+
+  .prev { left: -40px; }
+  .next { right: -40px; }
+}
+
+/* ================================
+   Mobile
+================================ */
+@media (max-width: 600px) {
+
   .arrow {
     padding: 12px;
     font-size: 20px;
     background: rgba(255,255,255,0.9);
-    display:none;
+    display: block;
   }
 
   .prev { left: 10px; }
   .next { right: 10px; }
 
-  /* Fix title size */
-  .testimonial-heading {
-    font-size: 26px;
-  }
-
-  .testimonial-subtitle {
-    font-size: 14px;
+  .testimonial-slide {
+    padding: 25px;
   }
 }
 
+/* XS phones */
+@media (max-width: 380px) {
+  .testimonial-slide { padding: 20px; }
+}
 </style>
 
 <script>
 let slideIndex = 0;
 let slides = document.querySelectorAll(".testimonial-slide");
 let totalSlides = slides.length;
-let autoSpeed = {{ section.settings.slider_speed | default: 5000 | json }};
 let sliderWrapper = document.getElementById("testimonialSlider");
+let autoSpeed = {{ section.settings.slider_speed | default: 5000 | json }};
 
-// Show slide
-function showSlides(index) {
-  if (index >= totalSlides) slideIndex = 0;
-  if (index < 0) slideIndex = totalSlides - 1;
+/* Show slide */
+function showSlides(i) {
+  if (i >= totalSlides) slideIndex = 0;
+  if (i < 0) slideIndex = totalSlides - 1;
 
   sliderWrapper.style.transform = `translateX(-${slideIndex * 100}%)`;
 
-  // Update dots
-  let dots = document.getElementsByClassName("dot");
-  for (let dot of dots) dot.classList.remove("active");
-  if (dots[slideIndex]) dots[slideIndex].classList.add("active");
+  let dots = document.querySelectorAll(".dot");
+  dots.forEach(dot => dot.classList.remove("active"));
+  dots[slideIndex].classList.add("active");
 }
 
-// Arrows
+/* Arrows */
 function moveLeft() {
   slideIndex--;
   showSlides(slideIndex);
 }
-
 function moveRight() {
   slideIndex++;
   showSlides(slideIndex);
 }
 
-// Dots
+/* Dots */
 function currentSlide(n) {
   slideIndex = n - 1;
   showSlides(slideIndex);
 }
 
-// Auto-play
-let autoPlayInterval = setInterval(() => {
+/* Auto-play */
+let autoPlay = setInterval(() => {
   slideIndex++;
   showSlides(slideIndex);
 }, autoSpeed);
 
-// Pause on hover
-let sliderWrapperDiv = document.querySelector(".testimonial-slider-wrapper");
-sliderWrapperDiv.addEventListener("mouseenter", () => clearInterval(autoPlayInterval));
-sliderWrapperDiv.addEventListener("mouseleave", () => {
-  autoPlayInterval = setInterval(() => {
+/* Pause on hover */
+document.querySelector(".testimonial-slider-wrapper").addEventListener("mouseenter", () => {
+  clearInterval(autoPlay);
+});
+document.querySelector(".testimonial-slider-wrapper").addEventListener("mouseleave", () => {
+  autoPlay = setInterval(() => {
     slideIndex++;
     showSlides(slideIndex);
   }, autoSpeed);
 });
 
-// Initialize first slide
+/* Initialize */
 showSlides(slideIndex);
 </script>
 
