@@ -1,5 +1,6 @@
 <section class="creative-banner-section">
   <div class="creative-banner-container">
+
     <!-- LEFT TEXT (Dynamic) -->
     <div class="cb-left">
       <h1 class="cb-heading" id="cbHeading">
@@ -13,169 +14,172 @@
     <!-- RIGHT IMAGE SLIDER -->
     <div class="cb-right">
       <div class="cb-image-slider" id="cbImageSlider">
+
         {% for block in section.blocks %}
           {% if block.type == 'slide' and block.settings.image %}
-            <img
-              class="cb-slide-img {% if forloop.first %}active{% endif %}"
-              src="{{ img | img_url: 'master' }}"
-              width="{{ img.width }}"
-              height="{{ img.height }}"
-              alt="{{ img.alt | escape }}"
-              loading="lazy"
-              data-heading="{{ block.settings.heading }}"
-              data-text="{{ block.settings.text }}"
-              data-animation="{{ block.settings.animation }}"
-            >
+           <img
+  class="cb-slide-img {% if forloop.first %}active{% endif %}"
+  src="{{ img | img_url: 'master' }}"
+  width="{{ img.width }}"
+  height="{{ img.height }}"
+  alt="{{ img.alt | escape }}"
+  loading="lazy"
+  data-heading="{{ block.settings.heading }}"
+  data-text="{{ block.settings.text }}"
+  data-animation="{{ block.settings.animation }}"
+>
           {% endif %}
         {% endfor %}
+
       </div>
     </div>
+
   </div>
 
-  <style>
-    /* =========================
+<style>
+/* =========================
 BASE
 ========================= */
-    .creative-banner-section {
-      padding: 80px 0;
-      background: linear-gradient(to right, #e8f0ff, #ffffff);
-    }
+.creative-banner-section {
+  padding: 80px 0;
+  background: linear-gradient(to right, #e8f0ff, #ffffff);
+}
 
-    .creative-banner-container {
-      max-width: 1200px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 40px;
-    }
+.creative-banner-container {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
 
-    .cb-left {
-      width: 45%;
-    }
+.cb-left {
+  width: 45%;
+}
 
-    .cb-heading {
-      font-size: clamp(26px, 4vw, 52px);
-      font-weight: 700;
-      margin-bottom: 20px;
-    }
+.cb-heading {
+  font-size: clamp(26px, 4vw, 52px);
+  font-weight: 700;
+  margin-bottom: 20px;
+}
 
-    .cb-subtext {
-      font-size: 17px;
-      line-height: 1.6;
-      color: #555;
-    }
+.cb-subtext {
+  font-size: 17px;
+  line-height: 1.6;
+  color: #555;
+}
 
-    /* =========================
+/* =========================
 IMAGE SLIDER
 ========================= */
-    .cb-right {
-      width: 55%;
-      position: relative;
-    }
+.cb-right {
+  width: 55%;
+  position: relative;
+}
 
-    .cb-image-slider {
-      position: relative;
-      height: 55vh;
-    }
+.cb-image-slider {
+  position: relative;
+  height: 55vh;
+}
 
-    .cb-slide-img {
-      position: absolute;
-      inset: 0;
-      margin: auto;
-      width: 75%;
-      opacity: 0;
-      transition: all 0.8s ease;
-    }
+.cb-slide-img {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 75%;
+  opacity: 0;
+  transition: all 0.8s ease;
+}
 
-    /* ACTIVE IMAGE */
-    .cb-slide-img.active {
-      opacity: 1;
-    }
+/* ACTIVE IMAGE */
+.cb-slide-img.active {
+  opacity: 1;
+}
 
-    /* ANIMATIONS */
-    .cb-slide-img[data-animation='fade'] {
-      transform: scale(1);
-    }
+/* ANIMATIONS */
+.cb-slide-img[data-animation="fade"] {
+  transform: scale(1);
+}
 
-    .cb-slide-img[data-animation='slide'] {
-      transform: translateX(40px);
-    }
-    .cb-slide-img.active[data-animation='slide'] {
-      transform: translateX(0);
-    }
+.cb-slide-img[data-animation="slide"] {
+  transform: translateX(40px);
+}
+.cb-slide-img.active[data-animation="slide"] {
+  transform: translateX(0);
+}
 
-    .cb-slide-img[data-animation='zoom'] {
-      transform: scale(0.9);
-    }
-    .cb-slide-img.active[data-animation='zoom'] {
-      transform: scale(1);
-    }
+.cb-slide-img[data-animation="zoom"] {
+  transform: scale(0.9);
+}
+.cb-slide-img.active[data-animation="zoom"] {
+  transform: scale(1);
+}
 
-    /* =========================
+/* =========================
 MOBILE ONLY SLIDER
 ========================= */
-    @media (min-width: 769px) {
-      .cb-slide-img:not(:first-child) {
-        display: none;
-      }
-    }
+@media (min-width: 769px) {
+  .cb-slide-img:not(:first-child) {
+    display: none;
+  }
+}
 
-    @media (max-width: 768px) {
-      .creative-banner-container {
-        flex-direction: column;
-        text-align: center;
-      }
+@media (max-width: 768px) {
+  .creative-banner-container {
+    flex-direction: column;
+    text-align: center;
+  }
 
-      .cb-left,
-      .cb-right {
-        width: 100%;
-      }
+  .cb-left,
+  .cb-right {
+    width: 100%;
+  }
 
-      .cb-image-slider {
-        height: 40vh;
-      }
-    }
-  </style>
+  .cb-image-slider {
+    height: 40vh;
+  }
+}
+</style>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const slides = document.querySelectorAll('.cb-slide-img');
-      const heading = document.getElementById('cbHeading');
-      const text = document.getElementById('cbText');
-      const slider = document.getElementById('cbImageSlider');
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const slides = document.querySelectorAll(".cb-slide-img");
+  const heading = document.getElementById("cbHeading");
+  const text = document.getElementById("cbText");
+  const slider = document.getElementById("cbImageSlider");
 
-      if (slides.length <= 1 || window.innerWidth > 768) return;
+  if (slides.length <= 1 || window.innerWidth > 768) return;
 
-      let index = 0;
-      let interval;
+  let index = 0;
+  let interval;
 
-      function showSlide(i) {
-        slides.forEach((s) => s.classList.remove('active'));
-        slides[i].classList.add('active');
+  function showSlide(i) {
+    slides.forEach(s => s.classList.remove("active"));
+    slides[i].classList.add("active");
 
-        heading.textContent = slides[i].dataset.heading;
-        text.textContent = slides[i].dataset.text;
-      }
+    heading.textContent = slides[i].dataset.heading;
+    text.textContent = slides[i].dataset.text;
+  }
 
-      function startSlider() {
-        interval = setInterval(() => {
-          index = (index + 1) % slides.length;
-          showSlide(index);
-        }, 3000);
-      }
-
-      function stopSlider() {
-        clearInterval(interval);
-      }
-
-      slider.addEventListener('mouseenter', stopSlider);
-      slider.addEventListener('mouseleave', startSlider);
-
+  function startSlider() {
+    interval = setInterval(() => {
+      index = (index + 1) % slides.length;
       showSlide(index);
-      startSlider();
-    });
-  </script>
+    }, 3000);
+  }
+
+  function stopSlider() {
+    clearInterval(interval);
+  }
+
+  slider.addEventListener("mouseenter", stopSlider);
+  slider.addEventListener("mouseleave", startSlider);
+
+  showSlide(index);
+  startSlider();
+});
+</script>
 </section>
 
 {% schema %}
@@ -220,7 +224,11 @@ MOBILE ONLY SLIDER
   "presets": [
     {
       "name": "Creative Banner Slider",
-      "blocks": [{ "type": "slide" }, { "type": "slide" }, { "type": "slide" }]
+      "blocks": [
+        { "type": "slide" },
+        { "type": "slide" },
+        { "type": "slide" }
+      ]
     }
   ]
 }
