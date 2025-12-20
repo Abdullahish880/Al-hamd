@@ -1,290 +1,154 @@
+<section class="ba-section">
+
+  <!-- BEFORE -->
+  <div class="ba-row">
+    <div class="ba-image">
+      {% if section.settings.before_image %}
+        <img
+          src="{{ section.settings.before_image | image_url: width: 1000 }}"
+          width="{{ section.settings.before_image.width }}"
+          height="{{ section.settings.before_image.height }}"
+          alt="Before image"
+          loading="lazy"
+        >
+      {% endif %}
+    </div>
+
+    <div class="ba-content">
+      <span class="ba-tag">{{ section.settings.before_label }}</span>
+      <h2>{{ section.settings.before_heading }}</h2>
+      {{ section.settings.before_text }}
+    </div>
+  </div>
+
+  <!-- AFTER -->
+  <div class="ba-row">
+    <div class="ba-image">
+      {% if section.settings.after_image %}
+        <img
+          src="{{ section.settings.after_image | image_url: width: 1000 }}"
+          width="{{ section.settings.after_image.width }}"
+          height="{{ section.settings.after_image.height }}"
+          alt="After image"
+          loading="lazy"
+        >
+      {% endif %}
+    </div>
+
+    <div class="ba-content">
+      <span class="ba-tag">{{ section.settings.after_label }}</span>
+      <h2>{{ section.settings.after_heading }}</h2>
+      {{ section.settings.after_text }}
+    </div>
+  </div>
+
+</section>
+
 <style>
-.ba-wrapper {
-  padding: 50px 0;
+.ba-section {
+  max-width: 1200px;
+  margin: auto;
+  padding: 60px 20px;
 }
 
-.ba-top {
-  position: relative;
-  height: {{ section.settings.desktop_height }}px;
-  border-radius: 14px;
-  overflow: hidden;
+.ba-row {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  margin-bottom: 80px;
 }
 
-@media (max-width: 768px) {
-  .ba-top {
-    height: {{ section.settings.mobile_height }}px;
-  }
-}
-
-.ba-layer {
-  position: absolute;
-  inset: 0;
-}
-
-.ba-layer img {
+.ba-image img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  max-width: 520px;
+  border-radius: 12px;
 }
 
-/* Before layer */
-.ba-before {
-  z-index: 2;
-  clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+.ba-content {
+  max-width: 520px;
 }
 
-/* Slider */
-.ba-slider {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4px;
-  height: 100%;
-  background: #fff;
-  z-index: 5;
-  cursor: ew-resize;
-}
-
-.ba-handle {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 56px;
-  height: 56px;
-  background: #fff;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 8px 20px rgba(0,0,0,.25);
-}
-
-.ba-handle::before,
-.ba-handle::after {
-  content: '';
-  position: absolute;
-  border-style: solid;
-}
-
-.ba-handle::before {
-  border-width: 7px 9px 7px 0;
-  border-color: transparent #000 transparent transparent;
-  left: 16px;
-}
-
-.ba-handle::after {
-  border-width: 7px 0 7px 9px;
-  border-color: transparent transparent transparent #000;
-  right: 16px;
-}
-
-/* Top labels */
-.ba-label {
-  position: absolute;
-  top: 20px;
-  padding: 6px 14px;
-  background: rgba(0,0,0,.6);
-  color: #fff;
+.ba-tag {
+  display: inline-block;
+  font-size: 12px;
   font-weight: 600;
-  border-radius: 999px;
-  z-index: 6;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
 }
 
-.ba-label.before { left: 20px; }
-.ba-label.after { right: 20px; }
+.ba-content h2 {
+  font-size: 32px;
+  margin-bottom: 15px;
+}
 
-/* Bottom section */
-.ba-bottom {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin-top: 30px;
+.ba-content p {
+  line-height: 1.6;
 }
 
 @media (max-width: 768px) {
-  .ba-bottom {
-    grid-template-columns: 1fr;
+  .ba-row {
+    flex-direction: column;
+    text-align: center;
   }
-}
-
-.ba-card {
-  background: #f7f7f7;
-  border-radius: 14px;
-  overflow: hidden;
-}
-
-.ba-card img {
-  width: 100%;
-  height: 260px;
-  object-fit: cover;
-}
-
-.ba-card-content {
-  padding: 18px;
-}
-
-.ba-card-content h4 {
-  margin-bottom: 10px;
 }
 </style>
 
-<div class="ba-wrapper">
-
-  <!-- TOP COMPARISON -->
-  <div class="ba-top" id="ba-{{ section.id }}">
-
-    <div class="ba-layer">
-      <img src="{{ section.settings.after_image | image_url: width: 1600 }}"
-           width="{{ section.settings.after_image.width }}"
-           height="{{ section.settings.after_image.height }}">
-    </div>
-
-    <div class="ba-layer ba-before">
-      <img src="{{ section.settings.before_image | image_url: width: 1600 }}"
-           width="{{ section.settings.before_image.width }}"
-           height="{{ section.settings.before_image.height }}">
-    </div>
-
-    <div class="ba-slider">
-      <div class="ba-handle"></div>
-    </div>
-
-    <div class="ba-label before">{{ section.settings.before_label }}</div>
-    <div class="ba-label after">{{ section.settings.after_label }}</div>
-  </div>
-
-  <!-- BOTTOM CONTENT -->
-  <div class="ba-bottom">
-
-    <div class="ba-card">
-      <img src="{{ section.settings.bottom_before_image | image_url: width: 800 }}"
-           width="{{ section.settings.bottom_before_image.width }}"
-           height="{{ section.settings.bottom_before_image.height }}">
-      <div class="ba-card-content">
-        <h4>{{ section.settings.bottom_before_heading }}</h4>
-        {{ section.settings.bottom_before_text }}
-      </div>
-    </div>
-
-    <div class="ba-card">
-      <img src="{{ section.settings.bottom_after_image | image_url: width: 800 }}"
-           width="{{ section.settings.bottom_after_image.width }}"
-           height="{{ section.settings.bottom_after_image.height }}">
-      <div class="ba-card-content">
-        <h4>{{ section.settings.bottom_after_heading }}</h4>
-        {{ section.settings.bottom_after_text }}
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<script>
-(function(){
-  const c = document.getElementById('ba-{{ section.id }}');
-  const s = c.querySelector('.ba-slider');
-  const b = c.querySelector('.ba-before');
-  let d = false;
-
-  const move = x => {
-    const r = c.getBoundingClientRect();
-    let p = ((x - r.left) / r.width) * 100;
-    p = Math.max(0, Math.min(100, p));
-    s.style.left = p + '%';
-    b.style.clipPath = `polygon(0 0, ${p}% 0, ${p}% 100%, 0 100%)`;
-  };
-
-  s.addEventListener('mousedown',()=>d=true);
-  document.addEventListener('mouseup',()=>d=false);
-  document.addEventListener('mousemove',e=>d&&move(e.clientX));
-})();
-</script>
-
 {% schema %}
 {
-  "name": "Before After (Advanced)",
+  "name": "Before After – Two Column",
   "settings": [
     {
       "type": "image_picker",
       "id": "before_image",
-      "label": "Top Before Image"
+      "label": "Before Image"
     },
-    {
-      "type": "image_picker",
-      "id": "after_image",
-      "label": "Top After Image"
-    },
-
     {
       "type": "text",
       "id": "before_label",
-      "label": "Top Before Label",
-      "default": "Before"
+      "label": "Before Label",
+      "default": "BEFORE"
     },
     {
       "type": "text",
-      "id": "after_label",
-      "label": "Top After Label",
-      "default": "After"
-    },
-
-    {
-      "type": "image_picker",
-      "id": "bottom_before_image",
-      "label": "Bottom Before Image"
-    },
-    {
-      "type": "text",
-      "id": "bottom_before_heading",
-      "label": "Bottom Before Heading",
+      "id": "before_heading",
+      "label": "Before Heading",
       "default": "Experience the perfect mix."
     },
     {
       "type": "richtext",
-      "id": "bottom_before_text",
-      "label": "Bottom Before Text",
+      "id": "before_text",
+      "label": "Before Text",
       "default": "<p>• Live music<br>• Festival ready</p>"
     },
 
     {
       "type": "image_picker",
-      "id": "bottom_after_image",
-      "label": "Bottom After Image"
+      "id": "after_image",
+      "label": "After Image"
     },
     {
       "type": "text",
-      "id": "bottom_after_heading",
-      "label": "Bottom After Heading",
+      "id": "after_label",
+      "label": "After Label",
+      "default": "AFTER"
+    },
+    {
+      "type": "text",
+      "id": "after_heading",
+      "label": "After Heading",
       "default": "Protect your hearing."
     },
     {
       "type": "richtext",
-      "id": "bottom_after_text",
-      "label": "Bottom After Text",
+      "id": "after_text",
+      "label": "After Text",
       "default": "<p>• Crystal clear sound<br>• Comfortable fit</p>"
-    },
-
-    {
-      "type": "range",
-      "id": "desktop_height",
-      "label": "Desktop Height",
-      "min": 400,
-      "max": 800,
-      "step": 20,
-      "default": 640
-    },
-    {
-      "type": "range",
-      "id": "mobile_height",
-      "label": "Mobile Height",
-      "min": 300,
-      "max": 500,
-      "step": 10,
-      "default": 400
     }
   ],
   "presets": [
     {
-      "name": "Before After – Full Layout"
+      "name": "Before After – Two Column"
     }
   ]
 }
