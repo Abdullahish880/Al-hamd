@@ -434,12 +434,30 @@
         "bg_color": "#661717",
         "slider_speed": 3500
       }
+    },
+    "before_after_slider_DzAVUt": {
+      "type": "before-after-slider",
+      "name": "Image Comparison Slider",
+      "settings": {
+        "before_image": "shopify://shop_images/istockphoto-528582811-612x612.jpg",
+        "before_alt": "Before image",
+        "after_image": "shopify://shop_images/istockphoto-1418580542-612x612.jpg",
+        "after_alt": "After image",
+        "show_labels": true,
+        "before_label": "No Folding",
+        "after_label": "After Folding",
+        "show_brand_labels": true,
+        "brand_text": "AMYET Ares",
+        "desktop_height": 640,
+        "mobile_height": 400
+      }
     }
   },
   "order": [
     "banner_creative_9JwiG6",
     "collection_list_KdaVk7",
     "product_list_b6EDmp",
-    "testimonial_3CFfk7"
+    "testimonial_3CFfk7",
+    "before_after_slider_DzAVUt"
   ]
 }
