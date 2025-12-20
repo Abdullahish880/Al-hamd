@@ -13,19 +13,7 @@
 
   {% render 'variant-main-picker', product_resource: product_resource %}
 
-  <!-- EXPECTED DELIVERY -->
-  <div
-    id="expected-delivery"
-    data-expected-delivery
-    style="margin-top: 8px;"
-  >
-    {% assign current_variant = product_resource.selected_or_first_available_variant %}
-
-    <p>
-      <strong>Expected delivery:</strong>
-      {{ current_variant.metafields.custom.delivery_date | default: '3–5 working days' }}
-    </p>
-  </div>
+ 
 
   <!-- Product JSON -->
   <script type="application/json">
