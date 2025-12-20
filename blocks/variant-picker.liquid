@@ -1,5 +1,3 @@
-
-
 {% liquid
   assign product_resource = closest.product
   if request.visual_preview_mode and product_resource == blank
@@ -7,104 +5,90 @@
   endif
 -%}
 
-{% render 'variant-main-picker', product_resource: product_resource %}
+<variant-picker
+  data-product-id="{{ product_resource.id }}"
+  data-product-url="{{ product_resource.url }}"
+  data-template-product-match="true"
+>
+
+  {% render 'variant-main-picker', product_resource: product_resource %}
+
+  <!-- EXPECTED DELIVERY -->
+  <div
+    id="expected-delivery"
+    data-expected-delivery
+    style="margin-top: 8px;"
+  >
+    {% assign current_variant = product_resource.selected_or_first_available_variant %}
+
+    <p>
+      <strong>Expected delivery:</strong>
+      {{ current_variant.metafields.custom.delivery_date | default: '3–5 working days' }}
+    </p>
+  </div>
+
+  <!-- Product JSON -->
+  <script type="application/json">
+    {{ product_resource | json }}
+  </script>
+
+</variant-picker>
+
+{% javascript %}
+document.addEventListener('variant:updated', function (event) {
+  const variantId = event.detail.id;
+  if (!variantId) return;
+
+  const picker = document.querySelector('variant-picker');
+  if (!picker) return;
+
+  const jsonScript = picker.querySelector(
+    'script[type="application/json"]'
+  );
+  if (!jsonScript) return;
+
+  const product = JSON.parse(jsonScript.textContent);
+  const variant = product.variants.find(
+    v => String(v.id) === String(variantId)
+  );
+
+  if (!variant) return;
+
+  const deliveryWrapper = document.querySelector('[data-expected-delivery]');
+  if (!deliveryWrapper) return;
+
+  const delivery =
+    variant.metafields?.custom?.delivery_date || '3–5 working days';
+
+  deliveryWrapper.innerHTML = `
+    <p>
+      <strong>Expected delivery:</strong>
+      ${delivery}
+    </p>
+  `;
+});
+{% endjavascript %}
 
 {% schema %}
 {
-  "name": "t:names.product_variant_picker",
-  "tag": null,
+  "name": "Product Variant Picker",
   "settings": [
-    {
-      "type": "paragraph",
-      "content": "t:content.resource_reference_product_variant_picker"
-    },
-    {
-      "type": "paragraph",
-      "content": "t:content.edit_variants_in_theme_settings"
-    },
     {
       "type": "select",
       "id": "variant_style",
-      "label": "t:settings.style",
+      "label": "Variant Style",
       "options": [
-        {
-          "value": "dropdowns",
-          "label": "t:options.dropdowns"
-        },
-        {
-          "value": "buttons",
-          "label": "t:options.buttons"
-        }
+        { "value": "buttons", "label": "Buttons" },
+        { "value": "dropdowns", "label": "Dropdowns" }
       ],
       "default": "buttons"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_swatches",
-      "label": "t:settings.swatches",
-      "default": true
-    },
-    {
-      "type": "text_alignment",
-      "id": "alignment",
-      "label": "t:settings.alignment",
-      "default": "left"
-    },
-    {
-      "type": "header",
-      "content": "t:content.padding"
-    },
-    {
-      "type": "range",
-      "id": "padding-block-start",
-      "label": "t:settings.top",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "padding-block-end",
-      "label": "t:settings.bottom",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 8
-    },
-    {
-      "type": "range",
-      "id": "padding-inline-start",
-      "label": "t:settings.left",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "padding-inline-end",
-      "label": "t:settings.right",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 0
     }
   ],
   "presets": [
     {
-      "name": "t:names.product_variant_picker",
-      "category": "t:categories.product"
+      "name": "Product Variant Picker",
+      "category": "Product"
     }
   ]
 }
 {% endschema %}
-
-<div id="expected-delivery">
-<p>Expected devlivery:{{ product.selected_or_first_available_variant.metafields.custom.delivery_date }}</p>
- 
-</div>
