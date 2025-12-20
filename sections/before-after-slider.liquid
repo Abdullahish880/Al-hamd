@@ -1,63 +1,95 @@
 <style>
-  .image-comparison-container {
-    position: relative;
-    width: 80%;
-    height: 640px;
-    border-radius: 12px;
-    background: #000;
-  }
-  
-  .section-wrapper{
-    display:flex;
-    justify-content:center;
-    align-items:center;
+.section-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
 }
-  @media (max-width: 768px) {
-    .image-comparison-container {
-      height: 400px;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .image-comparison-container {
-      height: 300px;
-    }
-  }
-  
-  .image-comparison-before,
-  .image-comparison-after {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border:solid 1px black;
-     border-radius:1rem;
-  }
 
-  .image-comparison-before {
-  z-index: 1;
-  clip-path: polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%);
-  transition: clip-path 0.1s ease;
+.image-comparison-container {
+  display: flex;
+  width: 80%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  position: relative;
+  height: {{ section.settings.desktop_height }}px;
 }
-  
-  .image-comparison-before img,
-  .image-comparison-after img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-     border-radius:1rem;
 
-  }
-  
-  .image-comparison-after {
-  clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);
-  transition: clip-path 0.1s ease;
+/* BEFORE COLUMN */
+.before-column {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  padding: 16px;
+  box-sizing: border-box;
   z-index: 2;
+  position: relative;
 }
-  
-  .image-comparison-slider {
+
+.before-images {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.before-images img {
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.before-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #fff;
+}
+
+.before-content ul {
+  list-style: disc;
+  margin: 0 0 12px 20px;
+}
+
+.before-content .stars {
+  margin-bottom: 12px;
+  color: gold;
+}
+
+.before-content .badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #ff4500;
+  color: #fff;
+  border-radius: 12px;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+.before-content button {
+  padding: 8px 16px;
+  border: none;
+  background: #fff;
+  color: #000;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* AFTER COLUMN */
+.after-column {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.after-column img {
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Slider */
+.image-comparison-slider {
   position: absolute;
   top: 0;
   left: 50%;
@@ -75,8 +107,8 @@
   background: rgba(255, 255, 255, 1);
   width: 8px;
 }
-  
-  .image-comparison-handle {
+
+.image-comparison-handle {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -103,171 +135,84 @@
 .image-comparison-handle:active {
   transform: translate(-50%, -50%) scale(1.05);
 }
-  
-  .image-comparison-handle::before,
-  .image-comparison-handle::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-style: solid;
-  }
-  
-  .image-comparison-handle::before {
-  border-left: 8px solid transparent;
-  border-right: 8px solid #333;
-  border-top: 8px solid transparent;
-  border-bottom: 8px solid transparent;
-  left: 10px;
+
+/* Labels */
+.image-comparison-label {
+  position: absolute;
+  bottom: 16px;
+  color: white;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  z-index: 5;
 }
 
-.image-comparison-handle::after {
-  border-left: 8px solid #333;
-  border-right: 8px solid transparent;
-  border-top: 8px solid transparent;
-  border-bottom: 8px solid transparent;
-  right: 10px;
+.image-comparison-label.before {
+  left: 16px;
 }
 
-.image-comparison-container:hover .image-comparison-slider {
-  background: rgba(255, 255, 255, 1);
-  width: 8px;
+.image-comparison-label.after {
+  right: 16px;
 }
 
-.image-comparison-container:hover .image-comparison-handle {
-  background: rgba(255, 255, 255, 1);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-}
-  
-  .image-comparison-label {
-    position: absolute;
-    bottom: 24px;
-    color: white;
-    font-size: 18px;
-    font-weight: 600;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    z-index: 5;
-  }
-  
-  @media (max-width: 768px) {
-    .image-comparison-label {
-      font-size: 16px;
-      bottom: 20px;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .image-comparison-label {
-      font-size: 14px;
-      bottom: 16px;
-    }
-  }
-  
-  .image-comparison-label.before {
-    left: 24px;
-  }
-  
-  .image-comparison-label.after {
-    right: 24px;
-  }
-  
-  .image-comparison-brand {
-    position: absolute;
-    top: 24px;
-    color: white;
-    font-size: 16px;
-    font-weight: 500;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    z-index: 5;
-  }
-  
-  @media (max-width: 768px) {
-    .image-comparison-brand {
-      font-size: 14px;
-      top: 20px;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .image-comparison-brand {
-      font-size: 12px;
-      top: 16px;
-    }
-  }
-  
-  .image-comparison-brand.before {
-    left: 24px;
-  }
-  
-  .image-comparison-brand.after {
-    right: 24px;
-  }
-  
+/* Responsive */
+@media (max-width: 768px) {
   .section-wrapper {
-    padding: 40px 20px;
+    flex-direction: column;
   }
-  
-  @media (max-width: 768px) {
-    .section-wrapper {
-      padding: 30px 16px;
-    }
+  .image-comparison-container {
+    flex-direction: column;
+    height: {{ section.settings.mobile_height }}px;
   }
-  
-  @media (max-width: 480px) {
-    .section-wrapper {
-      padding: 20px 12px;
-    }
-    .image-comparison-slider{
-        width:1px !important;
-    }
+  .before-column, .after-column {
+    flex: unset;
+    width: 100%;
   }
+  .before-images img {
+    width: 80px !important;
+    height: 80px !important;
+  }
+}
 </style>
 
 <div class="section-wrapper">
-  <div
-    class="image-comparison-container"
-    id="image-comparison-{{ section.id }}"
-  >
-    <!-- BEFORE IMAGE -->
-    <div class="image-comparison-before">
-      {% if section.settings.before_image %}
-        <img
-          src="{{ section.settings.before_image | image_url: width: 1200 }}"
-          alt="{{ section.settings.before_alt | default: 'Before image' }}"
-          loading="lazy"
-          width="{{ section.settings.before_image.width }}"
-          height="{{ section.settings.before_image.height }}"
-        >
-        
-      {% else %}
-        <img
-          src="https://via.placeholder.com/1200x800/333333/ffffff?text=Before+Image"
-          alt="Before image placeholder"
-          width="1200"
-          height="800"
-        >
-      {% endif %}
-      
+  <div class="image-comparison-container" id="image-comparison-{{ section.id }}">
+
+    <!-- BEFORE COLUMN -->
+    <div class="before-column">
+      <div class="before-images">
+        {% for block in section.blocks %}
+          {% if block.type == 'before_image' %}
+            <img 
+              src="{{ block.settings.image | image_url: width: section.settings.before_img_width }}" 
+              alt="{{ block.settings.alt_text }}"
+              width="{{ section.settings.before_img_width }}"
+              height="{{ section.settings.before_img_height }}">
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="before-content">
+        <div class="stars">{{ section.settings.stars }}</div>
+        <div class="badge">{{ section.settings.badge_text }}</div>
+        <ul>
+          {% assign features_list = section.settings.features | split: "\n" %}
+          {% for feature in features_list %}
+            <li>{{ feature }}</li>
+          {% endfor %}
+        </ul>
+        {% if section.settings.button_text %}
+          <button>{{ section.settings.button_text }}</button>
+        {% endif %}
+      </div>
     </div>
 
-    <!-- AFTER IMAGE -->
-    <div class="image-comparison-after">
-      {% if section.settings.after_image %}
-        <img
-          src="{{ section.settings.after_image | image_url: width: 1200 }}"
-          alt="{{ section.settings.after_alt | default: 'After image' }}"
-          loading="lazy"
-          width="{{ section.settings.after_image.width }}"
-          height="{{ section.settings.after_image.height }}"
-        >
-      {% else %}
-        <img
-          src="https://via.placeholder.com/1200x800/666666/ffffff?text=After+Image"
-          alt="After image placeholder"
-          width="1200"
-          height="800"
-        >
-      {% endif %}
+    <!-- AFTER COLUMN -->
+    <div class="after-column">
+      <img 
+        src="{{ section.settings.after_image | image_url: width: section.settings.after_img_width }}" 
+        alt="After Image"
+        width="{{ section.settings.after_img_width }}"
+        height="{{ section.settings.after_img_height }}">
+      <div class="image-comparison-label after">{{ section.settings.after_label }}</div>
     </div>
 
     <!-- SLIDER -->
@@ -275,25 +220,8 @@
       <div class="image-comparison-handle"></div>
     </div>
 
-    <!-- BRAND LABELS -->
-    {% if section.settings.show_brand_labels and section.settings.brand_text != blank %}
-      <div class="image-comparison-brand before">
-        {{ section.settings.brand_text }}
-      </div>
-      <div class="image-comparison-brand after">
-        {{ section.settings.brand_text }}
-      </div>
-    {% endif %}
-
-    <!-- BEFORE / AFTER LABELS -->
-    {% if section.settings.show_labels %}
-      <div class="image-comparison-label before">
-        {{ section.settings.before_label | default: 'Before' }}
-      </div>
-      <div class="image-comparison-label after">
-        {{ section.settings.after_label | default: 'After' }}
-      </div>
-    {% endif %}
+    <!-- BEFORE LABEL -->
+    <div class="image-comparison-label before">{{ section.settings.before_label }}</div>
 
   </div>
 </div>
@@ -305,8 +233,8 @@ document.addEventListener('DOMContentLoaded', function () {
   if (!container) return;
 
   const slider = container.querySelector('.image-comparison-slider');
-  const beforeImage = container.querySelector('.image-comparison-before');
-  const afterImage = container.querySelector('.image-comparison-after');
+  const beforeColumn = container.querySelector('.before-column');
+  const afterColumn = container.querySelector('.after-column');
 
   let isDragging = false;
 
@@ -316,18 +244,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function updateSlider(clientX) {
     const rect = container.getBoundingClientRect();
-
-    // 🔒 Clamp X inside container
     let x = Math.max(rect.left, Math.min(clientX, rect.right));
     let percent = ((x - rect.left) / rect.width) * 100;
 
     slider.style.left = percent + '%';
-
-    beforeImage.style.clipPath =
-      `polygon(0 0, ${percent}% 0, ${percent}% 100%, 0 100%)`;
-
-    afterImage.style.clipPath =
-      `polygon(${percent}% 0, 100% 0, 100% 100%, ${percent}% 100%)`;
+    beforeColumn.style.width = percent + '%';
+    afterColumn.style.width = (100 - percent) + '%';
   }
 
   function startDrag(e) {
@@ -348,136 +270,60 @@ document.addEventListener('DOMContentLoaded', function () {
     updateSlider(getClientX(e));
   }
 
-  // Mouse events
   slider.addEventListener('mousedown', startDrag);
   window.addEventListener('mousemove', dragMove);
   window.addEventListener('mouseup', stopDrag);
 
-  // Touch events
   slider.addEventListener('touchstart', startDrag, { passive: false });
   window.addEventListener('touchmove', dragMove, { passive: false });
   window.addEventListener('touchend', stopDrag);
 
-  // Stop drag if pointer leaves container
-  container.addEventListener('mouseleave', stopDrag);
-
-  // Click to move slider
   container.addEventListener('click', function (e) {
     updateSlider(e.clientX);
   });
 
-  // Disable image drag
   container.querySelectorAll('img').forEach(img => {
     img.addEventListener('dragstart', e => e.preventDefault());
   });
 });
 </script>
 
-
 {% schema %}
 {
-  "name": "Image Comparison Slider",
+  "name": "Before and After ",
   "tag": "section",
-  "class": "image-comparison-section",
   "settings": [
-    {
-      "type": "header",
-      "content": "Images"
+    { "type": "image_picker", "id": "after_image", "label": "After Image" },
+    { "type": "text", "id": "before_label", "label": "Before Label", "default": "Before" },
+    { "type": "text", "id": "after_label", "label": "After Label", "default": "After" },
+    { "type": "text", "id": "stars", "label": "Stars", "default": "⭐⭐⭐⭐☆" },
+    { "type": "text", "id": "badge_text", "label": "Badge Text", "default": "Top Rated" },
+    { 
+      "type": "textarea", 
+      "id": "features", 
+      "label": "Features", 
+      "default": "Feature One\nFeature Two\nFeature Three" 
     },
+    { "type": "number", "id": "before_img_width", "label": "Before Image Width", "default": 150 },
+    { "type": "number", "id": "before_img_height", "label": "Before Image Height", "default": 100 },
+    { "type": "number", "id": "after_img_width", "label": "After Image Width", "default": 600 },
+    { "type": "number", "id": "after_img_height", "label": "After Image Height", "default": 400 },
+    { "type": "number", "id": "desktop_height", "label": "Desktop Height", "default": 640 },
+    { "type": "number", "id": "mobile_height", "label": "Mobile Height", "default": 400 }
+  ],
+  "blocks": [
     {
-      "type": "image_picker",
-      "id": "before_image",
-      "label": "Before Image",
-      "info": "Recommended size: 1200x800px"
-    },
-    {
-      "type": "text",
-      "id": "before_alt",
-      "label": "Before Image Alt Text",
-      "default": "Before image"
-    },
-    {
-      "type": "image_picker",
-      "id": "after_image",
-      "label": "After Image",
-      "info": "Recommended size: 1200x800px"
-    },
-    {
-      "type": "text",
-      "id": "after_alt",
-      "label": "After Image Alt Text",
-      "default": "After image"
-    },
-    {
-      "type": "header",
-      "content": "Labels"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_labels",
-      "label": "Show Before/After Labels",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "before_label",
-      "label": "Before Label",
-      "default": "No Folding"
-    },
-    {
-      "type": "text",
-      "id": "after_label",
-      "label": "After Label",
-      "default": "After Folding"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_brand_labels",
-      "label": "Show Brand Labels",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "brand_text",
-      "label": "Brand Text",
-      "default": "AMYET Ares"
-    },
-    {
-      "type": "header",
-      "content": "Styling"
-    },
-    {
-      "type": "range",
-      "id": "desktop_height",
-      "label": "Desktop Height (px)",
-      "min": 400,
-      "max": 800,
-      "step": 20,
-      "default": 640,
-      "info": "Height in pixels for desktop view"
-    },
-    {
-      "type": "range",
-      "id": "mobile_height",
-      "label": "Mobile Height (px)",
-      "min": 250,
-      "max": 500,
-      "step": 10,
-      "default": 400,
-      "info": "Height in pixels for mobile view"
+      "type": "before_image",
+      "name": "Before Image Block",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Before Image" },
+        { "type": "text", "id": "alt_text", "label": "Alt Text", "default": "Before Image" }
+      ]
     }
   ],
   "presets": [
-    {
-      "name": "Image Comparison Slider",
-      "settings": {
-        "show_labels": true,
-        "show_brand_labels": true,
-        "before_label": "No Folding",
-        "after_label": "After Folding",
-        "brand_text": "AMYET Ares"
-      }
-    }
+    { "name": "Before/After Comparison", "category": "Media" }
   ]
 }
 {% endschema %}
+
