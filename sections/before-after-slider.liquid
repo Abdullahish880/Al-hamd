@@ -1,47 +1,40 @@
 <style>
-.image-compare-wrapper {
-  padding: 40px 0;
+.ba-wrapper {
+  padding: 50px 0;
 }
 
-.image-compare {
+.ba-top {
   position: relative;
-  width: 100%;
   height: {{ section.settings.desktop_height }}px;
-  overflow: hidden;
   border-radius: 14px;
+  overflow: hidden;
 }
 
 @media (max-width: 768px) {
-  .image-compare {
+  .ba-top {
     height: {{ section.settings.mobile_height }}px;
   }
 }
 
-.image-layer {
+.ba-layer {
   position: absolute;
   inset: 0;
 }
 
-.image-layer img {
+.ba-layer img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
 }
 
-/* Before */
-.image-before {
+/* Before layer */
+.ba-before {
   z-index: 2;
   clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
 }
 
-/* After */
-.image-after {
-  z-index: 1;
-}
-
 /* Slider */
-.compare-slider {
+.ba-slider {
   position: absolute;
   top: 0;
   left: 50%;
@@ -53,8 +46,7 @@
   cursor: ew-resize;
 }
 
-/* Handle */
-.compare-handle {
+.ba-handle {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -66,146 +58,211 @@
   box-shadow: 0 8px 20px rgba(0,0,0,.25);
 }
 
-.compare-handle::before,
-.compare-handle::after {
+.ba-handle::before,
+.ba-handle::after {
   content: '';
   position: absolute;
-  width: 0;
-  height: 0;
   border-style: solid;
 }
 
-.compare-handle::before {
+.ba-handle::before {
   border-width: 7px 9px 7px 0;
   border-color: transparent #000 transparent transparent;
   left: 16px;
 }
 
-.compare-handle::after {
+.ba-handle::after {
   border-width: 7px 0 7px 9px;
   border-color: transparent transparent transparent #000;
   right: 16px;
 }
 
-/* Labels */
-.compare-label {
+/* Top labels */
+.ba-label {
   position: absolute;
-  bottom: 20px;
+  top: 20px;
   padding: 6px 14px;
-  background: rgba(0,0,0,.55);
+  background: rgba(0,0,0,.6);
   color: #fff;
-  font-size: 14px;
   font-weight: 600;
   border-radius: 999px;
   z-index: 6;
 }
 
-.compare-label.before { left: 20px; }
-.compare-label.after { right: 20px; }
+.ba-label.before { left: 20px; }
+.ba-label.after { right: 20px; }
+
+/* Bottom section */
+.ba-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+@media (max-width: 768px) {
+  .ba-bottom {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ba-card {
+  background: #f7f7f7;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.ba-card img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+}
+
+.ba-card-content {
+  padding: 18px;
+}
+
+.ba-card-content h4 {
+  margin-bottom: 10px;
+}
 </style>
 
-<div class="image-compare-wrapper">
-  <div class="image-compare" id="compare-{{ section.id }}">
+<div class="ba-wrapper">
 
-    <!-- AFTER IMAGE -->
-    <div class="image-layer image-after">
-      {% if section.settings.after_image != blank %}
-        <img
-          src="{{ section.settings.after_image | image_url: width: 1600 }}"
-          alt="{{ section.settings.after_label | escape }}"
-          width="{{ section.settings.after_image.width }}"
-          height="{{ section.settings.after_image.height }}"
-          loading="lazy"
-        >
-      {% endif %}
+  <!-- TOP COMPARISON -->
+  <div class="ba-top" id="ba-{{ section.id }}">
+
+    <div class="ba-layer">
+      <img src="{{ section.settings.after_image | image_url: width: 1600 }}"
+           width="{{ section.settings.after_image.width }}"
+           height="{{ section.settings.after_image.height }}">
     </div>
 
-    <!-- BEFORE IMAGE -->
-    <div class="image-layer image-before">
-      {% if section.settings.before_image != blank %}
-        <img
-          src="{{ section.settings.before_image | image_url: width: 1600 }}"
-          alt="{{ section.settings.before_label | escape }}"
-          width="{{ section.settings.before_image.width }}"
-          height="{{ section.settings.before_image.height }}"
-          loading="lazy"
-        >
-      {% endif %}
+    <div class="ba-layer ba-before">
+      <img src="{{ section.settings.before_image | image_url: width: 1600 }}"
+           width="{{ section.settings.before_image.width }}"
+           height="{{ section.settings.before_image.height }}">
     </div>
 
-    <!-- SLIDER -->
-    <div class="compare-slider">
-      <div class="compare-handle"></div>
+    <div class="ba-slider">
+      <div class="ba-handle"></div>
     </div>
 
-    {% if section.settings.show_labels %}
-      <div class="compare-label before">{{ section.settings.before_label }}</div>
-      <div class="compare-label after">{{ section.settings.after_label }}</div>
-    {% endif %}
+    <div class="ba-label before">{{ section.settings.before_label }}</div>
+    <div class="ba-label after">{{ section.settings.after_label }}</div>
+  </div>
+
+  <!-- BOTTOM CONTENT -->
+  <div class="ba-bottom">
+
+    <div class="ba-card">
+      <img src="{{ section.settings.bottom_before_image | image_url: width: 800 }}"
+           width="{{ section.settings.bottom_before_image.width }}"
+           height="{{ section.settings.bottom_before_image.height }}">
+      <div class="ba-card-content">
+        <h4>{{ section.settings.bottom_before_heading }}</h4>
+        {{ section.settings.bottom_before_text }}
+      </div>
+    </div>
+
+    <div class="ba-card">
+      <img src="{{ section.settings.bottom_after_image | image_url: width: 800 }}"
+           width="{{ section.settings.bottom_after_image.width }}"
+           height="{{ section.settings.bottom_after_image.height }}">
+      <div class="ba-card-content">
+        <h4>{{ section.settings.bottom_after_heading }}</h4>
+        {{ section.settings.bottom_after_text }}
+      </div>
+    </div>
 
   </div>
 </div>
 
 <script>
 (function(){
-  const container = document.getElementById('compare-{{ section.id }}');
-  if (!container) return;
+  const c = document.getElementById('ba-{{ section.id }}');
+  const s = c.querySelector('.ba-slider');
+  const b = c.querySelector('.ba-before');
+  let d = false;
 
-  const slider = container.querySelector('.compare-slider');
-  const before = container.querySelector('.image-before');
-  let dragging = false;
+  const move = x => {
+    const r = c.getBoundingClientRect();
+    let p = ((x - r.left) / r.width) * 100;
+    p = Math.max(0, Math.min(100, p));
+    s.style.left = p + '%';
+    b.style.clipPath = `polygon(0 0, ${p}% 0, ${p}% 100%, 0 100%)`;
+  };
 
-  function move(x){
-    const rect = container.getBoundingClientRect();
-    let percent = ((x - rect.left) / rect.width) * 100;
-    percent = Math.max(0, Math.min(100, percent));
-    slider.style.left = percent + '%';
-    before.style.clipPath =
-      `polygon(0 0, ${percent}% 0, ${percent}% 100%, 0 100%)`;
-  }
-
-  slider.addEventListener('mousedown', () => dragging = true);
-  document.addEventListener('mouseup', () => dragging = false);
-  document.addEventListener('mousemove', e => dragging && move(e.clientX));
-
-  slider.addEventListener('touchstart', () => dragging = true);
-  document.addEventListener('touchend', () => dragging = false);
-  document.addEventListener('touchmove', e => dragging && move(e.touches[0].clientX));
+  s.addEventListener('mousedown',()=>d=true);
+  document.addEventListener('mouseup',()=>d=false);
+  document.addEventListener('mousemove',e=>d&&move(e.clientX));
 })();
 </script>
 
 {% schema %}
 {
-  "name": "Before After Image Slider",
+  "name": "Before After (Advanced)",
   "settings": [
     {
       "type": "image_picker",
       "id": "before_image",
-      "label": "Before Image"
+      "label": "Top Before Image"
     },
     {
       "type": "image_picker",
       "id": "after_image",
-      "label": "After Image"
+      "label": "Top After Image"
     },
-    {
-      "type": "checkbox",
-      "id": "show_labels",
-      "label": "Show Labels",
-      "default": true
-    },
+
     {
       "type": "text",
       "id": "before_label",
-      "label": "Before Label",
+      "label": "Top Before Label",
       "default": "Before"
     },
     {
       "type": "text",
       "id": "after_label",
-      "label": "After Label",
+      "label": "Top After Label",
       "default": "After"
     },
+
+    {
+      "type": "image_picker",
+      "id": "bottom_before_image",
+      "label": "Bottom Before Image"
+    },
+    {
+      "type": "text",
+      "id": "bottom_before_heading",
+      "label": "Bottom Before Heading",
+      "default": "Experience the perfect mix."
+    },
+    {
+      "type": "richtext",
+      "id": "bottom_before_text",
+      "label": "Bottom Before Text",
+      "default": "<p>• Live music<br>• Festival ready</p>"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "bottom_after_image",
+      "label": "Bottom After Image"
+    },
+    {
+      "type": "text",
+      "id": "bottom_after_heading",
+      "label": "Bottom After Heading",
+      "default": "Protect your hearing."
+    },
+    {
+      "type": "richtext",
+      "id": "bottom_after_text",
+      "label": "Bottom After Text",
+      "default": "<p>• Crystal clear sound<br>• Comfortable fit</p>"
+    },
+
     {
       "type": "range",
       "id": "desktop_height",
@@ -219,7 +276,7 @@
       "type": "range",
       "id": "mobile_height",
       "label": "Mobile Height",
-      "min": 250,
+      "min": 300,
       "max": 500,
       "step": 10,
       "default": 400
@@ -227,7 +284,7 @@
   ],
   "presets": [
     {
-      "name": "Before / After Comparison"
+      "name": "Before After – Full Layout"
     }
   ]
 }
