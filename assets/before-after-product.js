@@ -1,38 +1,43 @@
-document.addEventListener('DOMContentLoaded', function () {
-  const wrapper = document.querySelector('.before-after-wrapper');
-  const afterContent = document.querySelector('.after-content');
-  const handle = document.querySelector('.before-after-handle');
+(function() {
+  'use strict';
 
-  if (!wrapper || !afterContent || !handle) return;
+  document.addEventListener('DOMContentLoaded', function () {
+    var wrapper = document.querySelector('.before-after-wrapper');
+    if (!wrapper) return;
 
-  let isDragging = false;
+    var beforeContent = wrapper.querySelector('.before-content');
+    var afterContent = wrapper.querySelector('.after-content');
+    var handle = wrapper.querySelector('.before-after-handle');
 
-  const onMouseMove = (e) => {
-    if (!isDragging) return;
+    if (!beforeContent || !afterContent || !handle) return;
 
-    const rect = wrapper.getBoundingClientRect();
-    let offsetX = e.clientX - rect.left;
+    var isDragging = false;
 
-    if (offsetX < 0) offsetX = 0;
-    if (offsetX > rect.width) offsetX = rect.width;
+    function moveHandle(x) {
+      var rect = wrapper.getBoundingClientRect();
+      var offsetX = x - rect.left;
 
-    const percentage = (offsetX / rect.width) * 100;
+      if (offsetX < 0) offsetX = 0;
+      if (offsetX > rect.width) offsetX = rect.width;
 
-    afterContent.style.width = (100 - percentage) + '%';
-    handle.style.left = percentage + '%';
-  };
+      var percentage = (offsetX / rect.width) * 100;
 
-  const onMouseUp = () => { isDragging = false; };
+      // Smooth animation via transition already in CSS
+      beforeContent.style.width = percentage + '%';
+      afterContent.style.width = (100 - percentage) + '%';
+      handle.style.left = percentage + '%';
+    }
 
-  handle.addEventListener('mousedown', () => isDragging = true);
-  document.addEventListener('mousemove', onMouseMove);
-  document.addEventListener('mouseup', onMouseUp);
+    // Mouse events
+    handle.addEventListener('mousedown', function() { isDragging = true; });
+    document.addEventListener('mousemove', function(e) { if (isDragging) moveHandle(e.clientX); });
+    document.addEventListener('mouseup', function() { isDragging = false; });
 
-  // Touch support
-  handle.addEventListener('touchstart', () => isDragging = true);
-  document.addEventListener('touchmove', (e) => {
-    if (!isDragging) return;
-    onMouseMove(e.touches[0]);
+    // Touch events
+    handle.addEventListener('touchstart', function() { isDragging = true; });
+    document.addEventListener('touchmove', function(e) { 
+      if (isDragging) moveHandle(e.touches[0].clientX); 
+    });
+    document.addEventListener('touchend', function() { isDragging = false; });
   });
-  document.addEventListener('touchend', onMouseUp);
-});
+})();
