@@ -217,6 +217,9 @@
     .section-wrapper {
       padding: 20px 12px;
     }
+    .image-comparison-slider{
+        width:1px !important;
+    }
   }
 </style>
 
@@ -225,7 +228,6 @@
     class="image-comparison-container"
     id="image-comparison-{{ section.id }}"
   >
-
     <!-- BEFORE IMAGE -->
     <div class="image-comparison-before">
       {% if section.settings.before_image %}
@@ -236,6 +238,7 @@
           width="{{ section.settings.before_image.width }}"
           height="{{ section.settings.before_image.height }}"
         >
+        
       {% else %}
         <img
           src="https://via.placeholder.com/1200x800/333333/ffffff?text=Before+Image"
@@ -244,6 +247,7 @@
           height="800"
         >
       {% endif %}
+      
     </div>
 
     <!-- AFTER IMAGE -->
