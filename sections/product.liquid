@@ -1,301 +1,124 @@
 {% schema %}
 {
-  "name": "Custom Product Page",
+  "name": "Premium Product Page",
   "settings": [
-    {
-      "type": "color",
-      "id": "primary_color",
-      "label": "Primary color",
-      "default": "#3f7f73"
-    },
-    {
-      "type": "color",
-      "id": "button_color",
-      "label": "Add to cart button color",
-      "default": "#3f7f73"
-    },
-    {
-      "type": "text",
-      "id": "badge_text",
-      "label": "Stock badge text",
-      "default": "Back In Stock"
-    },
+    { "type": "color", "id": "primary_color", "label": "Primary Color", "default": "#3f7f73" },
+    { "type": "color", "id": "button_color", "label": "Add to Cart Button Color", "default": "#3f7f73" },
+    { "type": "text", "id": "badge_text", "label": "Stock Badge Text", "default": "Back In Stock" },
     {
       "type": "text",
       "id": "discount_text",
-      "label": "Discount / Offer text",
+      "label": "Discount / Offer Text",
       "default": "🎉 Get 20% OFF – Limited Time Offer"
     }
   ],
   "blocks": [
     {
-      "type": "bullet",
-      "name": "Bullet point",
-      "settings": [
-        {
-          "type": "text",
-          "id": "bullet_text",
-          "label": "Bullet text",
-          "default": "Sample bullet point"
-        }
-      ]
+      "type": "image",
+      "name": "Product Image",
+      "settings": [{ "type": "image_picker", "id": "image", "label": "Image" }]
     },
     {
-      "type": "variant_button",
-      "name": "Variant Button",
-      "settings": [
-        {
-          "type": "text",
-          "id": "button_label",
-          "label": "Button label",
-          "default": "Add to Cart"
-        },
-        {
-          "type": "color",
-          "id": "button_color",
-          "label": "Button color",
-          "default": "#3f7f73"
-        }
-      ]
+      "type": "bullet",
+      "name": "Bullet Point",
+      "settings": [{ "type": "text", "id": "bullet_text", "label": "Bullet Text" }]
     }
   ],
-  "presets": [
-    {
-      "name": "Custom Product Page",
-      "category": "Products",
-      "blocks": [
-        {
-          "type": "bullet",
-          "settings": {
-            "bullet_text": "Turn any gathering into a heart-to-heart"
-          }
-        },
-        {
-          "type": "bullet",
-          "settings": {
-            "bullet_text": "Always have the right question"
-          }
-        },
-        {
-          "type": "bullet",
-          "settings": {
-            "bullet_text": "Psychology-backed prompts"
-          }
-        },
-        {
-          "type": "variant_button",
-          "settings": {
-            "button_label": "Add to Cart",
-            "button_color": "#3f7f73"
-          }
-        }
-      ]
-    }
-  ]
+  "presets": [{ "name": "Premium Product Page", "category": "Products" }]
 }
 {% endschema %}
-
 
 <style>
   :root {
     --primary: {{ section.settings.primary_color }};
     --btn: {{ section.settings.button_color }};
-    --light-bg: #f6f7f5;
-    --text-dark: #222;
-    --text-muted: #666;
-    --border: #ddd;
   }
-
-  .custom-product {
-    max-width: 1200px;
-    margin: auto;
-    padding: 40px 20px;
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 50px;
-  }
-
-  .gallery {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .main-image img {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-    background: #fff;
-  }
-
-  .thumbnails {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-
-  .thumbnails img {
-    width: 70px;
-    height: 70px;
-    object-fit: cover;
-    border-radius: 6px;
-    cursor: pointer;
-    border: 2px solid transparent;
-  }
-
-  .thumbnails img.active {
-    border-color: var(--primary);
-  }
-
-  .product-info {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-  }
-
-  .badge {
-    background: #e5f3ef;
-    color: var(--primary);
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    width: fit-content;
-  }
-
-  h1 {
-    font-size: 34px;
-    margin: 0;
-  }
-
-  .price {
-    font-size: 26px;
-    font-weight: bold;
-  }
-
-  .discount {
-    color: #d9534f;
-    font-size: 14px;
-    font-weight: 600;
-  }
-
-  ul.features {
-    padding-left: 18px;
-    color: var(--text-muted);
-  }
-
-  .variant-select {
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    font-size: 14px;
-  }
-
-  .cart-row {
-    display: flex;
-    gap: 15px;
-  }
-
-  .qty {
-    display: flex;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .qty button {
-    width: 40px;
-    border: none;
-    background: #fff;
-    font-size: 20px;
-  }
-
-  .qty input {
-    width: 50px;
-    text-align: center;
-    border: none;
-  }
-
-  .add-to-cart {
-    flex: 1;
-    background: var(--btn);
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-
-  @media (max-width: 900px) {
-    .custom-product {
-      grid-template-columns: 1fr;
-    }
-  }
+  .custom-product { display: grid; grid-template-columns: 1.1fr 0.9fr; gap:50px; max-width:1200px; margin:auto; padding:40px 20px; }
+  .gallery { display: flex; flex-direction: column; gap:15px; position:relative; }
+  .main-image { position: relative; border-radius:10px; overflow:hidden; }
+  .main-image img { width:100%; height:auto; display:block; border-radius:10px; }
+  .thumbnails { display:flex; gap:10px; overflow-x:auto; padding:5px 0; }
+  .thumbnails img { width:70px; height:70px; object-fit:cover; border-radius:6px; cursor:pointer; border:2px solid transparent; }
+  .thumbnails img.active { border-color: var(--primary); }
+  .product-info { display:flex; flex-direction:column; gap:18px; }
+  .badge { background:#e5f3ef; color:var(--primary); padding:6px 12px; border-radius:20px; font-size:12px; width:fit-content; }
+  h1 { font-size:34px; margin:0; }
+  .subtitle { font-size:15px; color:#666; }
+  .price { font-size:26px; font-weight:bold; }
+  .discount { font-size:14px; font-weight:600; color:#d9534f; }
+  .features li { margin-bottom:8px; }
+  .variant-select { padding:12px; border-radius:8px; border:1px solid #ddd; font-size:14px; }
+  .cart-row { display:flex; gap:15px; margin-top:10px; }
+  .qty { display:flex; border:1px solid #ddd; border-radius:8px; overflow:hidden; }
+  .qty button { width:40px; border:none; background:#fff; font-size:20px; cursor:pointer; }
+  .qty input { width:50px; text-align:center; border:none; }
+  .add-to-cart { flex:1; background:var(--btn); color:#fff; border:none; border-radius:10px; font-size:16px; cursor:pointer; }
+  @media(max-width:900px){ .custom-product { grid-template-columns:1fr; } }
 </style>
 
 <div class="custom-product" data-section-id="{{ section.id }}">
-
-  <!-- IMAGES -->
   <div class="gallery">
     <div class="main-image">
       <img
         id="mainImage-{{ section.id }}"
-        src="{{ product.featured_image | image_url: width: 900 }}"
+        src="{{ product.featured_image | image_url: width:900, height:900 }}"
         width="900"
         height="900"
         alt="{{ product.title }}"
       >
+      <button class="arrow left" style="position:absolute;top:50%;left:0;">‹</button>
+      <button class="arrow right" style="position:absolute;top:50%;right:0;">›</button>
     </div>
 
-   <div class="thumbnails">
-  {% for image in product.images %}
-    <img
-      src="{{ image | image_url: width: 200 }}"
-      data-large="{{ image | image_url: width: 900 }}"
-      width="200"
-      height="200"
-      alt="{{ image.alt | escape | default: product.title }}"
-      loading="lazy"
-      class="{% if forloop.first %}active{% endif %}"
-    >
-  {% endfor %}
-</div>
-
+    <div class="thumbnails">
+      {% for block in section.blocks %}
+        {% if block.type == 'image' and block.settings.image %}
+          <img
+            src="{{ block.settings.image | image_url: width:200, height:200 }}"
+            width="200"
+            height="200"
+            data-large="{{ block.settings.image | image_url: width:900, height:900 }}"
+            alt="{{ product.title }}"
+            class="{% if forloop.first %}active{% endif %}"
+            loading="lazy"
+          >
+        {% endif %}
+      {% endfor %}
+    </div>
   </div>
 
-  <!-- INFO -->
   <div class="product-info">
-
+    <div class="rating">★★★★★ <span>132 reviews</span></div>
     <span class="badge">{{ section.settings.badge_text }}</span>
-
     <h1>{{ product.title }}</h1>
-
+    <p class="subtitle">{{ product.description | strip_html | truncate: 120 }}</p>
     <div class="price">
       {{ product.price | money }}
-      {% if product.compare_at_price > product.price %}
-        <span style="text-decoration:line-through;font-size:16px;color:#999;">
-          {{ product.compare_at_price | money }}
+      {% if product.compare_at_price > product.price -%}
+        <span style="text-decoration:line-through;color:#999;font-size:16px;">
+          {{- product.compare_at_price | money -}}
         </span>
-      {% endif %}
+      {%- endif %}
     </div>
-
     <div class="discount">{{ section.settings.discount_text }}</div>
 
     <ul class="features">
-      {% assign bullets = section.settings.bullets | newline_to_br | split: '<br />' %}
-      {% for bullet in bullets %}
-        <li>{{ bullet }}</li>
+      {% for block in section.blocks %}
+        {% if block.type == 'bullet' %}
+          <li>{{ block.settings.bullet_text }}</li>
+        {% endif %}
       {% endfor %}
     </ul>
 
     <form method="post" action="/cart/add">
-
-      <!-- VARIANT SELECTOR -->
       <select name="id" class="variant-select" id="variantSelect-{{ section.id }}">
         {% for variant in product.variants %}
           <option
             value="{{ variant.id }}"
-            data-image="{{ variant.featured_image | default: product.featured_image | image_url: width: 900 }}"
-            {% if variant == product.selected_or_first_available_variant %}selected{% endif %}
+            data-image="{{ variant.featured_image | default: product.featured_image | image_url: width:900 }}"
+            {% if variant == product.selected_or_first_available_variant %}
+              selected
+            {% endif %}
           >
             {{ variant.title }}
           </option>
@@ -308,46 +131,42 @@
           <input type="text" name="quantity" value="1" readonly>
           <button type="button" class="plus">+</button>
         </div>
-
-        <button type="submit" class="add-to-cart">
-          Add to Cart
-        </button>
+        <button type="submit" class="add-to-cart">Add to Cart</button>
       </div>
-
     </form>
-
   </div>
 </div>
 
 <script>
-(function() {
-  const section = document.querySelector('[data-section-id="{{ section.id }}"]');
-  if (!section) return;
+  (function () {
+    const section = document.querySelector('[data-section-id="{{ section.id }}"]');
+    const mainImage = section.querySelector('#mainImage-{{ section.id }}');
+    const thumbnails = section.querySelectorAll('.thumbnails img');
+    thumbnails.forEach((img) =>
+      img.addEventListener('click', () => {
+        thumbnails.forEach((i) => i.classList.remove('active'));
+        img.classList.add('active');
+        mainImage.src = img.dataset.large;
+      })
+    );
 
-  const mainImage = section.querySelector('#mainImage-{{ section.id }}');
-
-  section.querySelectorAll('.thumbnails img').forEach(img => {
-    img.addEventListener('click', () => {
-      section.querySelectorAll('.thumbnails img').forEach(i => i.classList.remove('active'));
-      img.classList.add('active');
-      mainImage.src = img.dataset.large;
-    });
-  });
-
-  const variantSelect = section.querySelector('#variantSelect-{{ section.id }}');
-  if (variantSelect) {
+    const variantSelect = section.querySelector('#variantSelect-{{ section.id }}');
     variantSelect.addEventListener('change', () => {
       const selected = variantSelect.selectedOptions[0];
-      if (selected.dataset.image) {
-        mainImage.src = selected.dataset.image;
-      }
+      if (selected.dataset.image) mainImage.src = selected.dataset.image;
     });
-  }
 
-  const qtyInput = section.querySelector('input[name="quantity"]');
-  section.querySelector('.plus').onclick = () => qtyInput.value++;
-  section.querySelector('.minus').onclick = () => {
-    if (qtyInput.value > 1) qtyInput.value--;
-  };
-})();
+    const qtyInput = section.querySelector('input[name="quantity"]');
+    section.querySelector('.plus').onclick = () => qtyInput.value++;
+    section.querySelector('.minus').onclick = () => {
+      if (qtyInput.value > 1) qtyInput.value--;
+    };
+
+    // Thumbnail slider arrows
+    const thumbWrapper = section.querySelector('.thumbnails');
+    const btnLeft = section.querySelector('.arrow.left');
+    const btnRight = section.querySelector('.arrow.right');
+    btnLeft.onclick = () => thumbWrapper.scrollBy({ left: -80, behavior: 'smooth' });
+    btnRight.onclick = () => thumbWrapper.scrollBy({ left: 80, behavior: 'smooth' });
+  })();
 </script>
