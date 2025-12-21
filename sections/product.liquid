@@ -25,16 +25,76 @@
       "id": "discount_text",
       "label": "Discount / Offer text",
       "default": "🎉 Get 20% OFF – Limited Time Offer"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "bullet",
+      "name": "Bullet point",
+      "settings": [
+        {
+          "type": "text",
+          "id": "bullet_text",
+          "label": "Bullet text",
+          "default": "Sample bullet point"
+        }
+      ]
     },
     {
-      "type": "textarea",
-      "id": "bullets",
-      "label": "Bullet points (one per line)",
-      "default": "Turn any gathering into a heart-to-heart\nAlways have the right question\nPsychology-backed prompts"
+      "type": "variant_button",
+      "name": "Variant Button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Add to Cart"
+        },
+        {
+          "type": "color",
+          "id": "button_color",
+          "label": "Button color",
+          "default": "#3f7f73"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Product Page",
+      "category": "Products",
+      "blocks": [
+        {
+          "type": "bullet",
+          "settings": {
+            "bullet_text": "Turn any gathering into a heart-to-heart"
+          }
+        },
+        {
+          "type": "bullet",
+          "settings": {
+            "bullet_text": "Always have the right question"
+          }
+        },
+        {
+          "type": "bullet",
+          "settings": {
+            "bullet_text": "Psychology-backed prompts"
+          }
+        },
+        {
+          "type": "variant_button",
+          "settings": {
+            "button_label": "Add to Cart",
+            "button_color": "#3f7f73"
+          }
+        }
+      ]
     }
   ]
 }
 {% endschema %}
+
 
 <style>
   :root {
