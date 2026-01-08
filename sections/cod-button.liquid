@@ -51,7 +51,7 @@
         </label>
 
         <div id="method-details">
-          <!-- Dynamic form fields will appear here -->
+          <!-- Dynamic fields based on delivery method -->
         </div>
 
         <button type="submit">Submit</button>
@@ -115,6 +115,19 @@ document.addEventListener("DOMContentLoaded", function() {
   const methodDetails = document.getElementById("method-details");
   const codForm = document.getElementById("cod-form");
 
+  // --- Replace these with your Storefront API token and shop domain ---
+  const STOREFRONT_TOKEN = "PASTE_YOUR_STOREFRONT_TOKEN_HERE";
+  const SHOP_DOMAIN = "YOUR_SHOP_NAME.myshopify.com";
+
+  // --- Helper: get the first product variant ID on the page dynamically ---
+  const PRODUCT_VARIANT_ID = document.querySelector('input[name="id"]')?.value 
+    ? `gid://shopify/ProductVariant/${document.querySelector('input[name="id"]').value}`
+    : null;
+
+  if (!PRODUCT_VARIANT_ID) {
+    console.error("Cannot detect product variant ID on this page.");
+  }
+
   // Open modal
   codButton.addEventListener("click", () => {
     codModal.style.display = "block";
@@ -132,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function() {
   // Dynamic fields based on delivery method
   deliverySelect.addEventListener("change", () => {
     const method = deliverySelect.value;
-    methodDetails.innerHTML = ""; // clear previous fields
+    methodDetails.innerHTML = "";
 
     if(method === "express") {
       methodDetails.innerHTML = `
@@ -166,12 +179,70 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
   // Form submission
-  codForm.addEventListener("submit", (e) => {
+  codForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    alert("Form submitted! You can connect this to Shopify AJAX or backend.");
-    codModal.style.display = "none";
-    codForm.reset();
-    methodDetails.innerHTML = "";
+
+    if (!PRODUCT_VARIANT_ID) {
+      alert("Product variant ID not found.");
+      return;
+    }
+
+    // Collect form data
+    const formData = new FormData(codForm);
+    const attributes = [];
+    formData.forEach((value, key) => {
+      attributes.push({ key, value });
+    });
+
+    // GraphQL mutation
+    const query = `
+      mutation checkoutCreate($input: CheckoutCreateInput!) {
+        checkoutCreate(input: $input) {
+          checkout {
+            id
+            webUrl
+          }
+          userErrors {
+            field
+            message
+          }
+        }
+      }
+    `;
+
+    const variables = {
+      input: {
+        lineItems: [
+          { variantId: PRODUCT_VARIANT_ID, quantity: 1 }
+        ],
+        customAttributes: attributes
+      }
+    };
+
+    try {
+      const res = await fetch(`https://${SHOP_DOMAIN}/api/2026-01/graphql.json`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Shopify-Storefront-Access-Token": STOREFRONT_TOKEN
+        },
+        body: JSON.stringify({ query, variables })
+      });
+
+      const data = await res.json();
+      const checkout = data.data.checkoutCreate.checkout;
+
+      if(checkout && checkout.webUrl) {
+        // Redirect to Shopify checkout
+        window.location.href = checkout.webUrl;
+      } else {
+        alert("Error creating checkout: " + JSON.stringify(data.data.checkoutCreate.userErrors));
+      }
+
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong while creating the checkout.");
+    }
   });
 });
 </script>
