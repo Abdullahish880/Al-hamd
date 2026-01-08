@@ -1,0 +1,177 @@
+{% schema %}
+{
+  "name": "COD Button Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Cash on Delivery"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cod_form",
+      "label": "Enable COD Form",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "COD Button"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="cod-section">
+  <button id="cod-button" class="cod-button">{{ section.settings.button_text }}</button>
+
+  <!-- Modal -->
+  <div id="cod-modal" class="cod-modal">
+    <div class="cod-modal-content">
+      <span id="cod-close" class="cod-close">&times;</span>
+      <h2>Choose Delivery Method</h2>
+      <form id="cod-form">
+        <label>
+          Full Name:
+          <input type="text" name="name" required>
+        </label>
+        <label>
+          Address:
+          <input type="text" name="address" required>
+        </label>
+        <label>
+          Delivery Method:
+          <select id="delivery-method" name="delivery_method" required>
+            <option value="">Select</option>
+            <option value="standard">Standard Delivery</option>
+            <option value="express">Express Delivery</option>
+            <option value="pickup">Store Pickup</option>
+          </select>
+        </label>
+
+        <div id="method-details">
+          <!-- Dynamic form fields will appear here -->
+        </div>
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<style>
+.cod-button {
+  background-color: #ff5a5f;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.cod-modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.6);
+}
+
+.cod-modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+}
+
+.cod-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+#method-details label {
+  display: block;
+  margin-top: 10px;
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const codButton = document.getElementById("cod-button");
+  const codModal = document.getElementById("cod-modal");
+  const codClose = document.getElementById("cod-close");
+  const deliverySelect = document.getElementById("delivery-method");
+  const methodDetails = document.getElementById("method-details");
+  const codForm = document.getElementById("cod-form");
+
+  // Open modal
+  codButton.addEventListener("click", () => {
+    codModal.style.display = "block";
+  });
+
+  // Close modal
+  codClose.addEventListener("click", () => {
+    codModal.style.display = "none";
+  });
+
+  window.addEventListener("click", (e) => {
+    if (e.target == codModal) codModal.style.display = "none";
+  });
+
+  // Dynamic fields based on delivery method
+  deliverySelect.addEventListener("change", () => {
+    const method = deliverySelect.value;
+    methodDetails.innerHTML = ""; // clear previous fields
+
+    if(method === "express") {
+      methodDetails.innerHTML = `
+        <label>
+          Express Fee (SAR):
+          <input type="number" name="express_fee" required>
+        </label>
+        <label>
+          Preferred Delivery Time:
+          <input type="time" name="delivery_time">
+        </label>
+      `;
+    } else if(method === "pickup") {
+      methodDetails.innerHTML = `
+        <label>
+          Pickup Location:
+          <select name="pickup_location" required>
+            <option value="store1">Store 1</option>
+            <option value="store2">Store 2</option>
+          </select>
+        </label>
+      `;
+    } else if(method === "standard") {
+      methodDetails.innerHTML = `
+        <label>
+          Additional Instructions:
+          <textarea name="instructions"></textarea>
+        </label>
+      `;
+    }
+  });
+
+  // Form submission
+  codForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    alert("Form submitted! You can connect this to Shopify AJAX or backend.");
+    codModal.style.display = "none";
+    codForm.reset();
+    methodDetails.innerHTML = "";
+  });
+});
+</script>
