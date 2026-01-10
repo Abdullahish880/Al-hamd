@@ -1,0 +1,254 @@
+{% schema %}
+{
+  "name": "COD Popup Exact",
+  "settings": [
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Buy with Cash on Delivery"
+    }
+  ],
+  "presets": [
+    {
+      "name": "COD Popup Exact"
+    }
+  ]
+}
+{% endschema %}
+
+<button id="codBtn" class="cod-trigger">
+  {{ section.settings.button_text }} – {{ product.price | money }}
+</button>
+
+<div class="cod-overlay" id="codOverlay">
+  <div class="cod-modal">
+    <span class="cod-close" id="codClose">×</span>
+
+    <h3>CASH ON DELIVERY</h3>
+
+    <!-- PRODUCT -->
+    <div class="cod-product">
+      <img src="{{ product.featured_image | image_url: width: 80 }}">
+      <div>
+        <strong>{{ product.title }}</strong>
+        <div class="cod-price">{{ product.price | money }}</div>
+      </div>
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="cod-summary">
+      <div><span>Subtotal</span><span>{{ product.price | money }}</span></div>
+      <div><span>Shipping</span><span>Free</span></div>
+      <div class="total"><span>Total</span><span>{{ product.price | money }}</span></div>
+    </div>
+
+    <!-- SHIPPING -->
+    <div class="cod-ship">
+      <strong>Shipping method</strong>
+      <div class="ship-box">
+        <input type="radio" checked> Free shipping
+        <span>Free</span>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <form id="codForm">
+      <strong>Enter your shipping address</strong>
+
+      <input type="text" name="first_name" placeholder="First name *" required>
+      <input type="tel" name="phone" placeholder="+966 Phone number *" required>
+      <input type="text" name="address" placeholder="Full Address *" required>
+      <input type="text" name="city" placeholder="City *" required>
+      <input type="email" name="email" placeholder="Email">
+
+      <!-- ADDONS -->
+      <div class="addon red">
+        <input type="checkbox" name="shipping_protection">
+        <span>Add <strong>Shipping Protection</strong> for just <b>9.99 SR</b></span>
+      </div>
+
+      <div class="addon gray">
+        <input type="checkbox" name="mystery_product">
+        <span>Add <strong>Special Mystery Product</strong> for just <b>20.00 SR</b></span>
+      </div>
+
+      <button class="cod-submit">
+        Buy with Cash on Delivery – {{ product.price | money }}
+      </button>
+    </form>
+  </div>
+</div>
+
+<style>
+.cod-trigger{
+  width:100%;
+  padding:14px;
+  background:#e00000;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.cod-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:9999;
+}
+
+/* 🔥 SCROLLABLE MODAL */
+.cod-modal{
+  background:#fff;
+  max-width:420px;
+  margin:4% auto;
+  padding:20px;
+  border-radius:12px;
+  position:relative;
+  max-height:85vh;
+  overflow-y:auto;
+}
+
+/* Optional scrollbar styling */
+.cod-modal::-webkit-scrollbar{
+  width:6px;
+}
+.cod-modal::-webkit-scrollbar-thumb{
+  background:#ccc;
+  border-radius:10px;
+}
+
+.cod-close{
+  position:absolute;
+  right:15px;
+  top:10px;
+  font-size:24px;
+  cursor:pointer;
+}
+
+.cod-product{
+  display:flex;
+  gap:10px;
+  border-bottom:1px solid #eee;
+  padding-bottom:10px;
+}
+
+.cod-price{
+  font-size:14px;
+  color:#333;
+}
+
+.cod-summary div{
+  display:flex;
+  justify-content:space-between;
+  margin:6px 0;
+}
+
+.cod-summary .total{
+  font-weight:700;
+}
+
+.ship-box{
+  display:flex;
+  justify-content:space-between;
+  background:#f5f5f5;
+  padding:10px;
+  border-radius:6px;
+  margin:6px 0;
+}
+
+#codForm input{
+  width:100%;
+  padding:10px;
+  margin:6px 0;
+  border:1px solid #ddd;
+  border-radius:6px;
+}
+
+.addon{
+  display:flex;
+  gap:8px;
+  padding:12px;
+  border-radius:6px;
+  margin:8px 0;
+  font-size:14px;
+}
+
+.addon.red{
+  border:1px solid red;
+  background:#fff5f5;
+}
+
+.addon.gray{
+  background:#f0f0f0;
+}
+
+.cod-submit{
+  width:100%;
+  padding:14px;
+  background:#e00000;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  font-size:16px;
+  margin-top:10px;
+}
+
+/* 🔒 Lock background scroll */
+body.cod-open{
+  overflow:hidden;
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded",()=>{
+  const btn=document.getElementById("codBtn");
+  const overlay=document.getElementById("codOverlay");
+  const close=document.getElementById("codClose");
+
+  btn.onclick=()=>{
+    overlay.style.display="block";
+    document.body.classList.add("cod-open");
+  };
+
+  close.onclick=()=>{
+    overlay.style.display="none";
+    document.body.classList.remove("cod-open");
+  };
+
+  overlay.onclick=e=>{
+    if(e.target===overlay){
+      overlay.style.display="none";
+      document.body.classList.remove("cod-open");
+    }
+  };
+
+  document.getElementById("codForm").onsubmit=async e=>{
+    e.preventDefault();
+
+    const variant=document.querySelector('input[name="id"]');
+    if(!variant){
+      alert("Variant not found");
+      return;
+    }
+
+    const fd=new FormData(e.target);
+    let attrs={};
+    fd.forEach((v,k)=>attrs[k]=v);
+
+    await fetch('/cart/add.js',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        items:[{id:variant.value,quantity:1}],
+        attributes:attrs
+      })
+    });
+
+    window.location.href='/checkout';
+  };
+});
+</script>
