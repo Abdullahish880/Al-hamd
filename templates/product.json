@@ -403,18 +403,17 @@
         "padding-block-end": 48
       }
     },
-    "cod_button_EY9i74": {
+    "cod_button_NyMKnY": {
       "type": "cod-button",
       "name": "COD Button",
       "settings": {
-        "button_text": "Cash on Delivery",
-        "show_cod_form": true
+        "button_text": "Cash on Delivery"
       }
     }
   },
   "order": [
     "main",
     "product_recommendations_qggXJq",
-    "cod_button_EY9i74"
+    "cod_button_NyMKnY"
   ]
 }
