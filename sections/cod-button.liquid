@@ -100,6 +100,7 @@
   z-index:9999;
 }
 
+/* 🔥 SCROLLABLE MODAL */
 .cod-modal{
   background:#fff;
   max-width:420px;
@@ -107,6 +108,17 @@
   padding:20px;
   border-radius:12px;
   position:relative;
+  max-height:85vh;
+  overflow-y:auto;
+}
+
+/* Optional scrollbar styling */
+.cod-modal::-webkit-scrollbar{
+  width:6px;
+}
+.cod-modal::-webkit-scrollbar-thumb{
+  background:#ccc;
+  border-radius:10px;
 }
 
 .cod-close{
@@ -124,7 +136,10 @@
   padding-bottom:10px;
 }
 
-.cod-price{ font-size:14px; color:#333 }
+.cod-price{
+  font-size:14px;
+  color:#333;
+}
 
 .cod-summary div{
   display:flex;
@@ -162,8 +177,14 @@
   font-size:14px;
 }
 
-.addon.red{ border:1px solid red; background:#fff5f5 }
-.addon.gray{ background:#f0f0f0 }
+.addon.red{
+  border:1px solid red;
+  background:#fff5f5;
+}
+
+.addon.gray{
+  background:#f0f0f0;
+}
 
 .cod-submit{
   width:100%;
@@ -175,6 +196,11 @@
   font-size:16px;
   margin-top:10px;
 }
+
+/* 🔒 Lock background scroll */
+body.cod-open{
+  overflow:hidden;
+}
 </style>
 
 <script>
@@ -183,14 +209,31 @@ document.addEventListener("DOMContentLoaded",()=>{
   const overlay=document.getElementById("codOverlay");
   const close=document.getElementById("codClose");
 
-  btn.onclick=()=>overlay.style.display="block";
-  close.onclick=()=>overlay.style.display="none";
-  overlay.onclick=e=>{ if(e.target===overlay) overlay.style.display="none"; }
+  btn.onclick=()=>{
+    overlay.style.display="block";
+    document.body.classList.add("cod-open");
+  };
+
+  close.onclick=()=>{
+    overlay.style.display="none";
+    document.body.classList.remove("cod-open");
+  };
+
+  overlay.onclick=e=>{
+    if(e.target===overlay){
+      overlay.style.display="none";
+      document.body.classList.remove("cod-open");
+    }
+  };
 
   document.getElementById("codForm").onsubmit=async e=>{
     e.preventDefault();
+
     const variant=document.querySelector('input[name="id"]');
-    if(!variant) return alert("Variant not found");
+    if(!variant){
+      alert("Variant not found");
+      return;
+    }
 
     const fd=new FormData(e.target);
     let attrs={};
@@ -205,7 +248,7 @@ document.addEventListener("DOMContentLoaded",()=>{
       })
     });
 
-    location.href='/checkout';
-  }
+    window.location.href='/checkout';
+  };
 });
 </script>
