@@ -29,7 +29,7 @@
 
     <!-- PRODUCT -->
     <div class="cod-product">
-      <img src="{{ product.featured_image | image_url: width: 80 }}">
+      <img src="{{ product.featured_image | image_url: width: 80 }}" class="cod-img">
       <div>
         <strong>{{ product.title }}</strong>
         <div class="cod-price">{{ product.price | money }}</div>
@@ -93,6 +93,10 @@
   
 }
 
+.cod-img{
+width:50%;
+}
+
 .cod-overlay{
   display:none;
   position:fixed;
@@ -133,7 +137,6 @@
 .cod-product{
   display:flex;
   gap:5rem;
-  width:50%;
   border-bottom:1px solid #eee;
   padding-bottom:10px;
 }
@@ -141,7 +144,6 @@
 .cod-price{
   font-size:14px;
   color:#333;
-  display:flex;
 }
 
 .cod-summary div{
