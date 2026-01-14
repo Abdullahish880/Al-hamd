@@ -30,7 +30,7 @@
     <!-- PRODUCT -->
     <div class="cod-product">
       <img src="{{ product.featured_image | image_url: width: 80 }}" class="cod-img">
-      <div>
+      <div class="cod-total-price">
         <strong>{{ product.title }}</strong>
         <div class="cod-price">{{ product.price | money }}</div>
       </div>
@@ -97,6 +97,11 @@
 width:40%;
 }
 
+.cod-total-price{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
 .cod-overlay{
   display:none;
   position:fixed;
